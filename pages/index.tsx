@@ -55,7 +55,7 @@ async function getPosts() {
   ).then((res) => res.json());
 
   const posts = res.posts;
-  console.log(posts[0].primary_author);
+  console.log(posts);
 
   return posts;
 }
@@ -267,6 +267,7 @@ function RotateOnDragComponent() {
 
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
+
   const bg = useColorModeValue('#ffffff50', '#00000050');
   const bgHover = useColorModeValue('gray.100', 'gray.900');
   const color = useColorModeValue('gray.900', 'gray.100');
@@ -335,8 +336,9 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                       >
                         <Image
                           src={
-                            post.feature_image ||
-                            'https://static.ghost.org/v3.0.0/images/welcome-to-ghost.png'
+                            '/vercel.svg'
+                            // post.feature_image ||
+                            // 'https://static.ghost.org/v3.0.0/images/welcome-to-ghost.png'
                           }
                           alt="feature_image"
                           layout="fill"
