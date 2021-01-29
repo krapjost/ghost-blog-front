@@ -51,7 +51,7 @@ class primary_ {
 
 async function getPosts() {
   const res = await fetch(
-    `${BLOG_URL}/ghost/api/v3/content/posts/?key=${CONTENT_API_KEY}&include=tags,authors`,
+    `https://krapjost.xyz/ghost/api/v3/content/posts/?key=${CONTENT_API_KEY}&include=tags,authors`,
   ).then((res) => res.json());
 
   const posts = res.posts;
@@ -336,9 +336,8 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                       >
                         <Image
                           src={
-                            '/vercel.svg'
-                            // post.feature_image ||
-                            // 'https://static.ghost.org/v3.0.0/images/welcome-to-ghost.png'
+                            post.feature_image ||
+                            'https://static.ghost.org/v3.0.0/images/welcome-to-ghost.png'
                           }
                           alt="feature_image"
                           layout="fill"
