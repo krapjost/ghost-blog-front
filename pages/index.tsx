@@ -29,7 +29,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { ProfilerOnRenderCallback, useEffect, useRef } from 'react';
 
 import { FiEdit3, FiBookOpen, FiCircle, FiMoon, FiSun } from 'react-icons/fi';
 const { CONTENT_API_KEY, BLOG_URL } = process.env;
@@ -41,11 +41,11 @@ type Post = {
   published_at: string;
   reading_time: string;
   feature_image: string;
-  primary_author: Array<primary_>;
-  primary_tag: Array<primary_>;
+  primary_author: primary_;
+  primary_tag: primary_;
 };
 
-interface primary_ {
+class primary_ {
   name: string;
 }
 
@@ -365,14 +365,6 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
           ),
         )}
       </List>
-      <Box
-        pos="fixed"
-        // bg="#00000090"
-        // w="5em"
-        // h="5em"
-        // overflow="hidden"
-        top="85vh"
-      ></Box>
 
       <RotateOnDragComponent />
     </Container>
