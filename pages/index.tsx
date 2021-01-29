@@ -41,9 +41,13 @@ type Post = {
   published_at: string;
   reading_time: string;
   feature_image: string;
-  primary_author: object;
-  primary_tag: object;
+  primary_author: Array<primary_>;
+  primary_tag: Array<primary_>;
 };
+
+interface primary_ {
+  name: string;
+}
 
 async function getPosts() {
   const res = await fetch(
