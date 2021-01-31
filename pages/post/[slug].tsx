@@ -1,7 +1,28 @@
 import Link from 'next/link';
-
+import {
+  Container,
+  Box,
+  Divider,
+  Heading,
+  List,
+  ListItem,
+  ListIcon,
+  Icon,
+  IconButton,
+  Wrap,
+  WrapItem,
+  Center,
+  Avatar,
+  Text,
+  Tag,
+  Button,
+  useColorMode,
+  useColorModeValue,
+  Flex,
+  position,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-
+import styles from '../../theme/post.module.css';
 const { CONTENT_API_KEY, BLOG_URL } = process.env;
 
 type Post = {
@@ -36,6 +57,12 @@ export const getStaticPaths = () => {
 };
 
 const Post: React.FC<{ post: Post }> = (props) => {
+  const bg = useColorModeValue('#b9a792', '#30201b');
+  const tagBg = useColorModeValue('#a69875', '#4f4d31');
+  const darkerBg = useColorModeValue('#e4d9cd', '#150200');
+  const divider = useColorModeValue('#b9a792', '#30201b');
+  const textColor = useColorModeValue('#30201b', '#e4d9cd');
+
   console.log('props=', props);
   const { post } = props;
 
@@ -48,13 +75,21 @@ const Post: React.FC<{ post: Post }> = (props) => {
   }
 
   return (
-    <div>
+    <Container
+      className={styles.post}
+      maxW="100%"
+      padding="5"
+      bg={darkerBg}
+      centerContent
+    >
       <Link href="/">
         <a>홈으로</a>
       </Link>
-      <h1>{post.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
-    </div>
+      <Heading size="xl" isTruncated>
+        {post.title}
+      </Heading>
+      <Box w="100%" dangerouslySetInnerHTML={{ __html: post.html }} />
+    </Container>
   );
 };
 

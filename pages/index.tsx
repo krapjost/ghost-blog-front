@@ -29,10 +29,17 @@ import {
   useTransform,
 } from 'framer-motion';
 import Image from 'next/image';
-import { ProfilerOnRenderCallback, useEffect, useRef } from 'react';
+import { ProfilerOnRenderCallback, useEffect, useRef, useState } from 'react';
 
-import { FiEdit3, FiBookOpen, FiCircle, FiMoon, FiSun } from 'react-icons/fi';
-const { CONTENT_API_KEY, BLOG_URL } = process.env;
+import {
+  FiEdit3,
+  FiBookOpen,
+  FiSearch,
+  FiArchive,
+  FiMoon,
+  FiSun,
+} from 'react-icons/fi';
+const { CONTENT_API_KEY } = process.env;
 
 type Post = {
   title: string;
@@ -80,55 +87,10 @@ const Path = (props) => (
   <motion.path
     fill="transparent"
     strokeWidth="3"
-    stroke="hsl(0, 0%, 18%)"
+    stroke={props.color}
     strokeLinecap="round"
     {...props}
   />
-);
-
-export const MenuToggle = ({ toggle }) => (
-  <Button
-    outline="none"
-    border="none"
-    boxShadow="0px 0px 0px 2px black"
-    cursor="pointer"
-    position="fixed"
-    top="85vh"
-    width="4em"
-    height="4em"
-    borderRadius="50%"
-    background="white"
-    onClick={toggle}
-    _active={{
-      boxShadow: '0px 0px 10px 2px black',
-    }}
-    _focus={{
-      boxShadow: '0px 0px 2px 2px black',
-    }}
-  >
-    <svg width="23" height="23" viewBox="0 0 23 23">
-      <Path
-        variants={{
-          closed: { d: 'M 2 2.5 L 20 2.5' },
-          open: { d: 'M 3 16.5 L 17 2.5' },
-        }}
-      />
-      <Path
-        d="M 2 9.423 L 20 9.423"
-        variants={{
-          closed: { opacity: 1 },
-          open: { opacity: 0 },
-        }}
-        transition={{ duration: 0.1 }}
-      />
-      <Path
-        variants={{
-          closed: { d: 'M 2 16.346 L 20 16.346' },
-          open: { d: 'M 3 2.5 L 17 16.346' },
-        }}
-      />
-    </svg>
-  </Button>
 );
 
 const navItem = {
@@ -137,186 +99,219 @@ const navItem = {
     y: 0,
     transition: {
       delay: 0,
-      type: 'tween',
+      type: 'spring',
+      stiffness: 700,
+      damping: 20,
     },
   },
   closed: {
     scale: 0,
-    y: 20,
+    y: 90,
     transition: {
       delay: 0.1,
       type: 'spring',
-      stiffness: 400,
+      stiffness: 500,
       damping: 40,
     },
   },
 };
 
-const dragBackground = {
-  open: {
-    scale: 1,
-    opacity: 1,
-  },
-  closed: {
-    scale: 0,
-    opacity: 0,
-  },
-};
-
 function RotateOnDragComponent() {
-  const x = useMotionValue(0);
-  const input = [-200, 0, 200];
-  const output = [-90, 0, 90];
-  const rotate = useTransform(x, input, output);
-
+  const controllerY = useMotionValue(0);
+  const inputY = [-30, 0];
+  const outputY = [-80, 0];
+  const menuY = useTransform(controllerY, inputY, outputY);
   const { colorMode, toggleColorMode } = useColorMode();
-
+  const color = useColorModeValue('#f9f4e7', '#151500');
+  const bg = useColorModeValue('#2f301bbf', '#f9f4e7bf');
+  const bgHover = useColorModeValue('#30201bef', '#f9f4e7');
+  const [rectY, setRectY] = useState(0);
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
 
   return (
     <>
+      {/* NAVIGATION_CONTAINER */}
       <motion.div
         initial={false}
         animate={isOpen ? 'open' : 'closed'}
         custom={height}
         ref={containerRef}
         style={{
-          rotate,
           position: 'fixed',
           top: '85vh',
-          width: '4em',
-          height: '4em',
-
-          borderRadius: '500px',
-
-          backgroundColor: '#ede090',
+          right: '5vw',
         }}
       >
-        <motion.div
-          drag="x"
-          dragConstraints={{
-            left: -200,
-            right: 200,
-          }}
-          variants={dragBackground}
-          style={{
-            x,
-            position: 'relative',
-            top: '-5000px',
-            left: '-5000px ',
-            width: '10000px',
-            height: '10000px',
-            backgroundColor: '#00000060',
-            zIndex: 10,
-          }}
-        />
-        <motion.div
-          variants={navItem}
-          style={{
-            position: 'absolute',
-            top: '-80px',
-            left: '0px',
-            width: '4em',
-            height: '4em',
-            borderRadius: '50%',
-            backgroundColor: '#cd30de',
-            zIndex: 11,
-          }}
-        />
-        <motion.div
-          variants={navItem}
-          style={{
-            position: 'absolute',
-            top: '-40px',
-            right: '80px',
-            width: '4em',
-            height: '4em',
-            borderRadius: '50%',
-            backgroundColor: '#cd30de',
-            zIndex: 11,
-          }}
+        {/* NAVIGATION_ */}
+        <Button
+          borderRadius="0"
+          _active={{ boxShadow: 'none' }}
+          _focus={{ boxShadow: 'none' }}
+          _hover={{ backgroundColor: bgHover }}
+          cursor="pointer"
+          padding="2"
+          w="50px"
+          h="50px"
+          bg={bg}
+          onClick={() => toggleOpen()}
         >
-          <Icon
-            w="4em"
-            h="4em"
-            padding="1em"
-            onClick={() => toggleColorMode()}
-            as={colorMode === 'light' ? FiSun : FiMoon}
-          />
-        </motion.div>
-        <motion.div
-          variants={navItem}
-          style={{
-            position: 'absolute',
-            top: '-40px',
-            left: '80px',
-            width: '4em',
-            height: '4em',
-            borderRadius: '50%',
-            backgroundColor: '#cd30de',
-            zIndex: 11,
-          }}
-        />
+          <svg width="40" height="40" viewBox="0 0 40 40">
+            <Path
+              color={color}
+              variants={{
+                closed: { d: 'M 38 2 L 38 38' },
+                open: { d: 'M 30 10 L 10 30' },
+              }}
+            />
+            <Path
+              color={color}
+              variants={{
+                closed: { d: 'M 2 2 L 2 38' },
+                open: { d: 'M 20 20 L 20 20' },
+              }}
+            />
+            <Path
+              color={color}
+              variants={{
+                closed: { d: 'M 2 38 L 38 38' },
+                open: { d: 'M 20 20 L 20 20' },
+              }}
+            />
+            <Path
+              color={color}
+              variants={{
+                closed: { d: 'M 2 2 L 38 2' },
+                open: { d: 'M 10 10 L 30 30' },
+              }}
+            />
+          </svg>
+
+          <motion.div
+            variants={navItem}
+            style={{
+              position: 'absolute',
+              top: '-12em',
+            }}
+          >
+            <Icon
+              color={color}
+              bg={bg}
+              _hover={{ backgroundColor: bgHover }}
+              w="3em"
+              h="3em"
+              padding=".8em"
+              as={FiSearch}
+            />
+          </motion.div>
+          <motion.div
+            variants={navItem}
+            style={{
+              // y: menuY,
+              position: 'absolute',
+              top: '-8em',
+            }}
+          >
+            <Icon
+              color={color}
+              bg={bg}
+              _hover={{ backgroundColor: bgHover }}
+              w="3em"
+              h="3em"
+              padding=".8em"
+              onClick={() => toggleColorMode()}
+              as={colorMode === 'light' ? FiMoon : FiSun}
+            />
+          </motion.div>
+          <motion.div
+            variants={navItem}
+            style={{
+              position: 'absolute',
+              top: '-4em',
+            }}
+          >
+            <Icon
+              color={color}
+              bg={bg}
+              _hover={{ backgroundColor: bgHover }}
+              w="3em"
+              h="3em"
+              padding=".8em"
+              as={FiArchive}
+            />
+          </motion.div>
+        </Button>
       </motion.div>
-      <MenuToggle toggle={() => toggleOpen()} />
     </>
   );
 }
 
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
-
-  const bg = useColorModeValue('#ffffff50', '#00000050');
-  const bgHover = useColorModeValue('gray.100', 'gray.900');
-  const color = useColorModeValue('gray.900', 'gray.100');
+  const brown = {
+    50: '#f9f2e7',
+    100: '#e4d9cd',
+    200: '#cec2b0',
+    300: '#b9a792',
+    400: '#a68b75',
+    500: '#8c6e5a',
+    600: '#6d5346',
+    700: '#4f3931',
+    800: '#30201b',
+    900: '#150200',
+  };
+  const green = {
+    50: '#f9f4e7',
+    100: '#e4dacd',
+    200: '#cec2b0',
+    300: '#b9ad92',
+    400: '#a69875',
+    500: '#8c825a',
+    600: '#6d6846',
+    700: '#4f4d31',
+    800: '#2f301b',
+    900: '#151500',
+  };
+  const bg = useColorModeValue('#b9a792', '#30201b');
+  const tagBg = useColorModeValue('#a69875', '#4f4d31');
+  const darkerBg = useColorModeValue('#e4d9cd', '#150200');
+  const divider = useColorModeValue('#b9a792', '#30201b');
+  const textColor = useColorModeValue('#30201b', '#e4d9cd');
   const [isOpen, toggleOpen] = useCycle(false, true);
 
   return (
-    <Container padding="10" maxW="100%" bg={bg} centerContent>
-      <Avatar
+    <Container padding="5" maxW="100%" bg={bg} centerContent>
+      {/* <Avatar
         size="2xl"
         name={posts[0].primary_author.name}
         src="https://bit.ly/sage-adebayo"
       />
-      <Box mb="10">{posts[0].primary_author.name}</Box>
+      <Box mb="10">{posts[0].primary_author.name}</Box> */}
       <List
         display="flex"
         maxW="100%"
-        flexWrap="wrap"
+        flexDirection="column"
         justifyContent="space-around"
       >
         {posts.map(
           (post): JSX.Element => (
             <ListItem
               w="100%"
-              maxW="600px"
-              mb="10"
+              maxW="800px"
+              mb="5"
               borderRadius="md"
               boxShadow="md"
+              bg={darkerBg}
               key={post.slug}
             >
               <Link href="/post/[slug]" as={`/post/${post.slug}`}>
                 <a>
                   <Flex justifyContent="space-between" alignItems="center">
-                    <Heading
-                      size="xl"
-                      bgGradient="linear(to-r, gray.600, blue.600)"
-                      _hover={{
-                        bgGradient: 'linear(to-r, purple.500, orange.500)',
-                      }}
-                      bgClip="text"
-                      ml="10"
-                      w="60%"
-                      isTruncated
-                    >
-                      {post.title}
-                    </Heading>
                     <motion.div
                       style={{
-                        width: '80px',
-                        marginRight: '2.5rem',
+                        width: '60px',
+                        margin: '1.5rem',
                       }}
                       animate={{ rotateY: 360 }}
                       transition={{
@@ -328,11 +323,11 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                       }}
                     >
                       <Box
-                        borderRadius="full"
+                        borderRadius="md"
                         overflow="hidden"
                         position="relative"
-                        w="80px"
-                        h="80px"
+                        w="60px"
+                        h="60px"
                       >
                         <Image
                           src={
@@ -345,16 +340,40 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                         />
                       </Box>
                     </motion.div>
+                    <Heading
+                      size="xl"
+                      bgGradient="linear(to-r, #8c6e5a, #6d5346)"
+                      bgClip="text"
+                      pr="5"
+                      w="100%"
+                      isTruncated
+                    >
+                      {post.title}
+                    </Heading>
                   </Flex>
                 </a>
               </Link>
-              <Text noOfLines={2} fontSize="md" padding="5" isTruncated>
+              <Divider borderColor={divider} />
+
+              <Text
+                color={textColor}
+                fontWeight="bold"
+                fontSize="md"
+                padding="5"
+                isTruncated
+              >
                 {post.excerpt}
               </Text>
-              <Divider />
+              <Divider borderColor={divider} />
 
-              <Text fontSize="sm" padding="5" align="right" isTruncated>
-                <Tag variant="outline" colorScheme="blue">
+              <Text
+                color={textColor}
+                fontSize="sm"
+                padding="5"
+                align="right"
+                isTruncated
+              >
+                <Tag mr="2" variant="solid" color={textColor} bg={tagBg}>
                   {post.primary_tag ? post.primary_tag.name : 'no tag'}
                 </Tag>
                 <ListIcon mr="2" ml="2" as={FiBookOpen} />
