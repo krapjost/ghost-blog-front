@@ -146,9 +146,13 @@ function RotateOnDragComponent() {
       >
         {/* NAVIGATION_ */}
         <Button
+          outline="none"
           borderRadius="0"
           _active={{ boxShadow: 'none' }}
-          _focus={{ boxShadow: 'none' }}
+          _focus={{
+            outline: 'none',
+            boxShadow: 'none',
+          }}
           _hover={{ backgroundColor: bgHover }}
           cursor="pointer"
           padding="2"
