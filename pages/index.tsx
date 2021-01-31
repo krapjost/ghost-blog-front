@@ -7,38 +7,17 @@ import {
   List,
   ListItem,
   ListIcon,
-  Icon,
-  IconButton,
-  Wrap,
-  WrapItem,
-  Center,
-  Avatar,
   Text,
   Tag,
-  Button,
-  useColorMode,
   useColorModeValue,
   Flex,
-  position,
 } from '@chakra-ui/react';
-import {
-  motion,
-  useCycle,
-  AnimateSharedLayout,
-  useMotionValue,
-  useTransform,
-} from 'framer-motion';
+import { motion, useCycle } from 'framer-motion';
 import Image from 'next/image';
-import { ProfilerOnRenderCallback, useEffect, useRef, useState } from 'react';
 
-import {
-  FiEdit3,
-  FiBookOpen,
-  FiSearch,
-  FiArchive,
-  FiMoon,
-  FiSun,
-} from 'react-icons/fi';
+import Navigation from '../components/Navigation';
+
+import { FiEdit3, FiBookOpen } from 'react-icons/fi';
 const { CONTENT_API_KEY } = process.env;
 
 type Post = {
@@ -71,185 +50,6 @@ export const getStaticProps = async ({ params }) => {
   const posts = await getPosts();
   return { props: { posts } };
 };
-
-const useDimensions = (ref) => {
-  const dimensions = useRef({ width: 0, height: 0 });
-
-  useEffect(() => {
-    dimensions.current.width = ref.current.offsetWidth;
-    dimensions.current.height = ref.current.offsetHeight;
-  }, []);
-
-  return dimensions.current;
-};
-
-const Path = (props) => (
-  <motion.path
-    fill="transparent"
-    strokeWidth="3"
-    stroke={props.color}
-    strokeLinecap="round"
-    {...props}
-  />
-);
-
-const navItem = {
-  open: {
-    scale: 1,
-    y: 0,
-    transition: {
-      delay: 0,
-      type: 'spring',
-      stiffness: 700,
-      damping: 20,
-    },
-  },
-  closed: {
-    scale: 0,
-    y: 90,
-    transition: {
-      delay: 0.1,
-      type: 'spring',
-      stiffness: 500,
-      damping: 40,
-    },
-  },
-};
-
-function RotateOnDragComponent() {
-  const controllerY = useMotionValue(0);
-  const inputY = [-30, 0];
-  const outputY = [-80, 0];
-  const menuY = useTransform(controllerY, inputY, outputY);
-  const { colorMode, toggleColorMode } = useColorMode();
-  const color = useColorModeValue('#f9f4e7', '#151500');
-  const bg = useColorModeValue('#2f301bbf', '#f9f4e7bf');
-  const bgHover = useColorModeValue('#30201bef', '#f9f4e7');
-  const [rectY, setRectY] = useState(0);
-  const [isOpen, toggleOpen] = useCycle(false, true);
-  const containerRef = useRef(null);
-  const { height } = useDimensions(containerRef);
-
-  return (
-    <>
-      {/* NAVIGATION_CONTAINER */}
-      <motion.div
-        initial={false}
-        animate={isOpen ? 'open' : 'closed'}
-        custom={height}
-        ref={containerRef}
-        style={{
-          position: 'fixed',
-          top: '85vh',
-          right: '5vw',
-        }}
-      >
-        {/* NAVIGATION_ */}
-        <Button
-          outline="none"
-          borderRadius="0"
-          _active={{ boxShadow: 'none' }}
-          _focus={{
-            outline: 'none',
-            boxShadow: 'none',
-          }}
-          _hover={{ backgroundColor: bgHover }}
-          cursor="pointer"
-          padding="2"
-          w="50px"
-          h="50px"
-          bg={bg}
-          onClick={() => toggleOpen()}
-        >
-          <svg width="40" height="40" viewBox="0 0 40 40">
-            <Path
-              color={color}
-              variants={{
-                closed: { d: 'M 38 2 L 38 38' },
-                open: { d: 'M 30 10 L 10 30' },
-              }}
-            />
-            <Path
-              color={color}
-              variants={{
-                closed: { d: 'M 2 2 L 2 38' },
-                open: { d: 'M 20 20 L 20 20' },
-              }}
-            />
-            <Path
-              color={color}
-              variants={{
-                closed: { d: 'M 2 38 L 38 38' },
-                open: { d: 'M 20 20 L 20 20' },
-              }}
-            />
-            <Path
-              color={color}
-              variants={{
-                closed: { d: 'M 2 2 L 38 2' },
-                open: { d: 'M 10 10 L 30 30' },
-              }}
-            />
-          </svg>
-
-          <motion.div
-            variants={navItem}
-            style={{
-              position: 'absolute',
-              top: '-12em',
-            }}
-          >
-            <Icon
-              color={color}
-              bg={bg}
-              _hover={{ backgroundColor: bgHover }}
-              w="3em"
-              h="3em"
-              padding=".8em"
-              as={FiSearch}
-            />
-          </motion.div>
-          <motion.div
-            variants={navItem}
-            style={{
-              // y: menuY,
-              position: 'absolute',
-              top: '-8em',
-            }}
-          >
-            <Icon
-              color={color}
-              bg={bg}
-              _hover={{ backgroundColor: bgHover }}
-              w="3em"
-              h="3em"
-              padding=".8em"
-              onClick={() => toggleColorMode()}
-              as={colorMode === 'light' ? FiMoon : FiSun}
-            />
-          </motion.div>
-          <motion.div
-            variants={navItem}
-            style={{
-              position: 'absolute',
-              top: '-4em',
-            }}
-          >
-            <Icon
-              color={color}
-              bg={bg}
-              _hover={{ backgroundColor: bgHover }}
-              w="3em"
-              h="3em"
-              padding=".8em"
-              as={FiArchive}
-            />
-          </motion.div>
-        </Button>
-      </motion.div>
-    </>
-  );
-}
 
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
@@ -304,6 +104,7 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
               w="100%"
               maxW="800px"
               mb="5"
+              padding="5"
               borderRadius="md"
               boxShadow="md"
               bg={darkerBg}
@@ -314,24 +115,25 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                   <Flex justifyContent="space-between" alignItems="center">
                     <motion.div
                       style={{
-                        width: '60px',
                         margin: '1.5rem',
                       }}
-                      animate={{ rotateY: 360 }}
-                      transition={{
-                        duration: 3,
-                        repeat: 1,
-                        type: 'tween',
-                        ease: 'backInOut',
-                        repeatType: 'loop',
-                      }}
+                      // animate={{ rotateY: 360 }}
+                      // transition={{
+                      //   duration: 3,
+                      //   repeat: 1,
+                      //   type: 'tween',
+                      //   ease: 'backInOut',
+                      //   repeatType: 'loop',
+                      // }}
                     >
                       <Box
                         borderRadius="md"
                         overflow="hidden"
                         position="relative"
-                        w="60px"
-                        h="60px"
+                        boxShadow={`-0.5em -0.5em 0 0.1em ${bg}`}
+                        // border={`2px solid ${bg}`}
+                        w="3.5em"
+                        h="3.5em"
                       >
                         <Image
                           src={
@@ -345,10 +147,12 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                       </Box>
                     </motion.div>
                     <Heading
-                      size="xl"
+                      size="2xl"
                       bgGradient="linear(to-r, #8c6e5a, #6d5346)"
                       bgClip="text"
                       pr="5"
+                      lineHeight="1.7em"
+                      h="40px"
                       w="100%"
                       isTruncated
                     >
@@ -359,22 +163,18 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
               </Link>
               <Divider borderColor={divider} />
 
-              <Text
-                color={textColor}
-                fontWeight="bold"
-                fontSize="md"
-                padding="5"
-                isTruncated
-              >
+              <Text color={textColor} fontSize="1em" padding="5" isTruncated>
                 {post.excerpt}
               </Text>
               <Divider borderColor={divider} />
 
               <Text
                 color={textColor}
-                fontSize="sm"
+                display="flex"
+                fontSize=".8em"
                 padding="5"
-                align="right"
+                alignItems="center"
+                justifyContent="flex-end"
                 isTruncated
               >
                 <Tag mr="2" variant="solid" color={textColor} bg={tagBg}>
@@ -390,7 +190,7 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
         )}
       </List>
 
-      <RotateOnDragComponent />
+      <Navigation />
     </Container>
   );
 };

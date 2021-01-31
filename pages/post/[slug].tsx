@@ -1,29 +1,9 @@
 import Link from 'next/link';
-import {
-  Container,
-  Box,
-  Divider,
-  Heading,
-  List,
-  ListItem,
-  ListIcon,
-  Icon,
-  IconButton,
-  Wrap,
-  WrapItem,
-  Center,
-  Avatar,
-  Text,
-  Tag,
-  Button,
-  useColorMode,
-  useColorModeValue,
-  Flex,
-  position,
-} from '@chakra-ui/react';
+import { Container, Box, Heading, useColorModeValue } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import styles from '../../theme/post.module.css';
-const { CONTENT_API_KEY, BLOG_URL } = process.env;
+import Navigation from '../../components/Navigation';
+
+const { CONTENT_API_KEY } = process.env;
 
 type Post = {
   title: string;
@@ -33,7 +13,7 @@ type Post = {
 
 async function getPost(slug: string) {
   const res = await fetch(
-    `${BLOG_URL}/ghost/api/v3/content/posts/slug/${slug}?key=${CONTENT_API_KEY}&fields=title,slug,html`,
+    `https://krapjost.xyz/ghost/api/v3/content/posts/slug/${slug}?key=${CONTENT_API_KEY}&fields=title,slug,html`,
   ).then((res) => res.json());
 
   const posts = res.posts;
@@ -76,19 +56,17 @@ const Post: React.FC<{ post: Post }> = (props) => {
 
   return (
     <Container
-      className={styles.post}
+      className="post-full-content"
       maxW="100%"
-      padding="5"
+      padding="3em"
       bg={darkerBg}
       centerContent
     >
-      <Link href="/">
-        <a>홈으로</a>
-      </Link>
       <Heading size="xl" isTruncated>
         {post.title}
       </Heading>
       <Box w="100%" dangerouslySetInnerHTML={{ __html: post.html }} />
+      <Navigation />
     </Container>
   );
 };
