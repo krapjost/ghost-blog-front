@@ -58,7 +58,8 @@ const Post: React.FC<{ post: Post }> = (props) => {
     <Container
       className="post-full-content"
       maxW="800px"
-      padding="3em"
+      padding="1em"
+      fontSize=".8em"
       bg={darkerBg}
       centerContent
     >

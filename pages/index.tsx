@@ -81,7 +81,7 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
               w="100%"
               maxW="800px"
               mb="5"
-              padding="5"
+              padding="2"
               borderRadius="md"
               boxShadow="md"
               bg={contentBg}
@@ -94,23 +94,14 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                       style={{
                         margin: '1.5rem',
                       }}
-                      // animate={{ rotateY: 360 }}
-                      // transition={{
-                      //   duration: 3,
-                      //   repeat: 1,
-                      //   type: 'tween',
-                      //   ease: 'backInOut',
-                      //   repeatType: 'loop',
-                      // }}
                     >
                       <Box
                         borderRadius="md"
                         overflow="hidden"
                         position="relative"
                         boxShadow={`-0.5em -0.5em 0 0.1em ${bg}`}
-                        // border={`2px solid ${bg}`}
-                        w="3.5em"
-                        h="3.5em"
+                        w="2em"
+                        h="2em"
                       >
                         <Image
                           src={
@@ -124,10 +115,10 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                       </Box>
                     </motion.div>
                     <Heading
-                      size="2xl"
+                      size="lg"
                       bgGradient="linear(to-r, #8c6e5a, #6d5346)"
                       bgClip="text"
-                      pr="5"
+                      pr="1"
                       lineHeight="1.7em"
                       w="100%"
                       isTruncated
@@ -139,7 +130,7 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
               </Link>
               <Divider borderColor={divider} />
 
-              <Text color={textColor} fontSize="1em" padding="5" isTruncated>
+              <Text color={textColor} fontSize=".5em" padding="2" isTruncated>
                 {post.excerpt}
               </Text>
               <Divider borderColor={divider} />
@@ -147,13 +138,20 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
               <Text
                 color={textColor}
                 display="flex"
-                fontSize=".8em"
-                padding="5"
+                fontSize=".5em"
+                padding="1"
                 alignItems="center"
                 justifyContent="flex-end"
                 isTruncated
               >
-                <Tag mr="2" variant="solid" color={textColor} bg={tagBg}>
+                <Tag
+                  mr="2"
+                  fontSize=".5em"
+                  fontWeight="bold"
+                  variant="solid"
+                  color={textColor}
+                  bg={tagBg}
+                >
                   {post.primary_tag ? post.primary_tag.name : 'no tag'}
                 </Tag>
                 <ListIcon mr="2" ml="2" as={FiBookOpen} />

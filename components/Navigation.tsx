@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { FiSearch, FiHome, FiMoon, FiSun } from 'react-icons/fi';
 import React from 'react';
+import SearchModalComponent from './SearchModal';
 
 const useDimensions = (ref) => {
   const dimensions = useRef({ width: 0, height: 0 });
@@ -55,7 +56,7 @@ const Path = (props) => (
 const navItem = {
   open: {
     scale: 1,
-    x: 0,
+    y: 0,
     transition: {
       delay: 0,
       type: 'spring',
@@ -65,7 +66,7 @@ const navItem = {
   },
   closed: {
     scale: 0,
-    x: 70,
+    y: 70,
     transition: {
       delay: 0.1,
       type: 'spring',
@@ -92,8 +93,8 @@ function Navigation() {
         ref={containerRef}
         style={{
           position: 'fixed',
-          bottom: '2em',
-          right: '2em',
+          bottom: '1em',
+          right: '1em',
         }}
       >
         {/* NAVIGATION_ */}
@@ -111,9 +112,7 @@ function Navigation() {
           w="60px"
           h="60px"
           bg="none"
-          onTouchStart={() => toggleOpen()}
-          onMouseEnter={() => toggleOpen()}
-          onMouseLeave={() => toggleOpen()}
+          onClick={() => toggleOpen()}
         >
           <svg width="60" height="60" viewBox="0 0 60 60">
             <Path
@@ -143,26 +142,28 @@ function Navigation() {
             variants={navItem}
             style={{
               position: 'absolute',
-              left: '-18em',
+              top: '-12em',
             }}
           >
-            <Icon
-              color={color}
-              _hover={{ backgroundColor: 'green.400' }}
-              _active={{ backgroundColor: 'blue.500' }}
-              borderRadius="1em"
-              w="6em"
-              h="6em"
-              padding="1.2em"
-              as={FiSearch}
-            />
+            <SearchModalComponent>
+              <Icon
+                color={color}
+                _hover={{ backgroundColor: 'green.400' }}
+                _active={{ backgroundColor: 'blue.500' }}
+                borderRadius="1em"
+                w="4em"
+                h="4em"
+                padding="1em"
+                as={FiSearch}
+              />
+            </SearchModalComponent>
           </motion.div>
+
           <motion.div
             variants={navItem}
             style={{
-              // y: menuY,
               position: 'absolute',
-              left: '-12em',
+              top: '-8em',
             }}
           >
             <Icon
@@ -170,9 +171,9 @@ function Navigation() {
               _hover={{ backgroundColor: 'green.400' }}
               _active={{ backgroundColor: 'blue.500' }}
               borderRadius="1em"
-              w="6em"
-              h="6em"
-              padding="1.2em"
+              w="4em"
+              h="4em"
+              padding="1em"
               onClick={() => toggleColorMode()}
               as={colorMode === 'light' ? FiMoon : FiSun}
             />
@@ -181,7 +182,7 @@ function Navigation() {
             variants={navItem}
             style={{
               position: 'absolute',
-              left: '-6em',
+              top: '-4em',
             }}
           >
             <Link href="/">
@@ -195,9 +196,9 @@ function Navigation() {
                   _hover={{ backgroundColor: 'green.400' }}
                   _active={{ backgroundColor: 'blue.500' }}
                   borderRadius="1em"
-                  w="6em"
-                  h="6em"
-                  padding="1.2em"
+                  w="4em"
+                  h="4em"
+                  padding="1em"
                   as={FiHome}
                 />
               </a>
