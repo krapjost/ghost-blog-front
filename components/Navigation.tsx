@@ -24,17 +24,38 @@ const useDimensions = (ref) => {
 const Path = (props) => (
   <motion.path
     fill="transparent"
-    strokeWidth="3"
+    strokeWidth="4"
     stroke={props.color}
     strokeLinecap="round"
     {...props}
   />
 );
 
+// const navBar = {
+//   open: {
+//     background: '#cdef90',
+//     transition: {
+//       delay: 0,
+//       type: 'spring',
+//       stiffness: 700,
+//       damping: 20,
+//     },
+//   },
+//   closed: {
+//     background: '#fff',
+//     transition: {
+//       delay: 0,
+//       type: 'spring',
+//       stiffness: 500,
+//       damping: 40,
+//     },
+//   },
+// };
+
 const navItem = {
   open: {
     scale: 1,
-    y: 0,
+    x: 0,
     transition: {
       delay: 0,
       type: 'spring',
@@ -44,7 +65,7 @@ const navItem = {
   },
   closed: {
     scale: 0,
-    y: 70,
+    x: 70,
     transition: {
       delay: 0.1,
       type: 'spring',
@@ -55,16 +76,8 @@ const navItem = {
 };
 
 function Navigation() {
-  const controllerY = useMotionValue(0);
-  const inputY = [-30, 0];
-  const outputY = [-80, 0];
-  const menuY = useTransform(controllerY, inputY, outputY);
   const { colorMode, toggleColorMode } = useColorMode();
-  // const color = useColorModeValue('#f9f4e7', '#151500');
   const color = useColorModeValue('#151500', '#f9f4e7');
-  const bg = useColorModeValue('green.400', 'green.700');
-  const bgFocus = useColorModeValue('green.600', 'green.500');
-  const [rectY, setRectY] = useState(0);
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
@@ -79,56 +92,49 @@ function Navigation() {
         ref={containerRef}
         style={{
           position: 'fixed',
-          top: '85vh',
-          right: '5vw',
+          bottom: '2em',
+          right: '2em',
         }}
       >
         {/* NAVIGATION_ */}
         <Button
           outline="none"
-          borderRadius="0"
+          borderRadius="full"
           _active={{ boxShadow: 'none', backgroundColor: 'blue.500' }}
           _focus={{
             outline: 'none',
             boxShadow: 'none',
-            backgroundColor: bgFocus,
           }}
-          _hover={{ backgroundColor: bg }}
+          _hover={{ backgroundColor: 'none' }}
           cursor="pointer"
           padding="2"
-          w="50px"
-          h="50px"
-          // bg={bg}
+          w="60px"
+          h="60px"
           bg="none"
-          onClick={() => toggleOpen()}
+          onTouchStart={() => toggleOpen()}
+          onMouseEnter={() => toggleOpen()}
+          onMouseLeave={() => toggleOpen()}
         >
-          <svg width="40" height="40" viewBox="0 0 40 40">
+          <svg width="60" height="60" viewBox="0 0 60 60">
             <Path
               color={color}
               variants={{
-                closed: { d: 'M 38 2 L 38 38' },
-                open: { d: 'M 30 10 L 10 30' },
+                closed: { d: 'M 10 15 L 50 15' },
+                open: { d: 'M 15 15 L 45 45' },
               }}
             />
             <Path
               color={color}
               variants={{
-                closed: { d: 'M 2 2 L 2 38' },
-                open: { d: 'M 20 20 L 20 20' },
+                closed: { d: 'M 5 30 L 55 30' },
+                open: { d: 'M 30 30 L 30 30' },
               }}
             />
             <Path
               color={color}
               variants={{
-                closed: { d: 'M 2 38 L 38 38' },
-                open: { d: 'M 20 20 L 20 20' },
-              }}
-            />
-            <Path
-              color={color}
-              variants={{
-                closed: { d: 'M 2 2 L 38 2' },
-                open: { d: 'M 10 10 L 30 30' },
+                closed: { d: 'M 10 45 L 50 45' },
+                open: { d: 'M 15 45 L 45 15' },
               }}
             />
           </svg>
@@ -137,16 +143,17 @@ function Navigation() {
             variants={navItem}
             style={{
               position: 'absolute',
-              top: '-15em',
+              left: '-18em',
             }}
           >
             <Icon
               color={color}
-              // bg={bg}
-              _hover={{ backgroundColor: bg }}
-              w="5em"
-              h="5em"
-              padding="1em"
+              _hover={{ backgroundColor: 'green.400' }}
+              _active={{ backgroundColor: 'blue.500' }}
+              borderRadius="1em"
+              w="6em"
+              h="6em"
+              padding="1.2em"
               as={FiSearch}
             />
           </motion.div>
@@ -155,16 +162,17 @@ function Navigation() {
             style={{
               // y: menuY,
               position: 'absolute',
-              top: '-10em',
+              left: '-12em',
             }}
           >
             <Icon
               color={color}
-              // bg={bg}
-              _hover={{ backgroundColor: bg }}
-              w="5em"
-              h="5em"
-              padding="1em"
+              _hover={{ backgroundColor: 'green.400' }}
+              _active={{ backgroundColor: 'blue.500' }}
+              borderRadius="1em"
+              w="6em"
+              h="6em"
+              padding="1.2em"
               onClick={() => toggleColorMode()}
               as={colorMode === 'light' ? FiMoon : FiSun}
             />
@@ -173,18 +181,23 @@ function Navigation() {
             variants={navItem}
             style={{
               position: 'absolute',
-              top: '-5em',
+              left: '-6em',
             }}
           >
             <Link href="/">
-              <a>
+              <a
+                style={{
+                  boxShadow: 'none',
+                }}
+              >
                 <Icon
                   color={color}
-                  // bg={bg}
-                  _hover={{ backgroundColor: bg }}
-                  w="5em"
-                  h="5em"
-                  padding="1em"
+                  _hover={{ backgroundColor: 'green.400' }}
+                  _active={{ backgroundColor: 'blue.500' }}
+                  borderRadius="1em"
+                  w="6em"
+                  h="6em"
+                  padding="1.2em"
                   as={FiHome}
                 />
               </a>
