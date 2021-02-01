@@ -53,39 +53,16 @@ export const getStaticProps = async ({ params }) => {
 
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
-  const brown = {
-    50: '#f9f2e7',
-    100: '#e4d9cd',
-    200: '#cec2b0',
-    300: '#b9a792',
-    400: '#a68b75',
-    500: '#8c6e5a',
-    600: '#6d5346',
-    700: '#4f3931',
-    800: '#30201b',
-    900: '#150200',
-  };
-  const green = {
-    50: '#f9f4e7',
-    100: '#e4dacd',
-    200: '#cec2b0',
-    300: '#b9ad92',
-    400: '#a69875',
-    500: '#8c825a',
-    600: '#6d6846',
-    700: '#4f4d31',
-    800: '#2f301b',
-    900: '#151500',
-  };
-  const bg = useColorModeValue('#b9a792', '#30201b');
-  const tagBg = useColorModeValue('#a69875', '#4f4d31');
-  const darkerBg = useColorModeValue('#e4d9cd', '#150200');
+
+  const bg = useColorModeValue('#e4dacd', '#30201b');
+  const contentBg = useColorModeValue('#fff', '#150200');
+  const tagBg = useColorModeValue('#f9f2e7', '#4f4d31');
   const divider = useColorModeValue('#b9a792', '#30201b');
   const textColor = useColorModeValue('#30201b', '#e4d9cd');
   const [isOpen, toggleOpen] = useCycle(false, true);
 
   return (
-    <Container padding="5" maxW="100%" bg={bg} centerContent>
+    <Container padding="5" maxW="800px" bg={bg} centerContent>
       {/* <Avatar
         size="2xl"
         name={posts[0].primary_author.name}
@@ -107,7 +84,7 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
               padding="5"
               borderRadius="md"
               boxShadow="md"
-              bg={darkerBg}
+              bg={contentBg}
               key={post.slug}
             >
               <Link href="/post/[slug]" as={`/post/${post.slug}`}>
@@ -152,7 +129,6 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                       bgClip="text"
                       pr="5"
                       lineHeight="1.7em"
-                      h="40px"
                       w="100%"
                       isTruncated
                     >

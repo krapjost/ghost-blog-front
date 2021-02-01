@@ -57,7 +57,7 @@ const Post: React.FC<{ post: Post }> = (props) => {
   return (
     <Container
       className="post-full-content"
-      maxW="100%"
+      maxW="800px"
       padding="3em"
       bg={darkerBg}
       centerContent

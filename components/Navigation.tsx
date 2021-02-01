@@ -44,11 +44,11 @@ const navItem = {
   },
   closed: {
     scale: 0,
-    y: 90,
+    y: 70,
     transition: {
       delay: 0.1,
       type: 'spring',
-      stiffness: 500,
+      stiffness: 600,
       damping: 40,
     },
   },
@@ -60,9 +60,10 @@ function Navigation() {
   const outputY = [-80, 0];
   const menuY = useTransform(controllerY, inputY, outputY);
   const { colorMode, toggleColorMode } = useColorMode();
-  const color = useColorModeValue('#f9f4e7', '#151500');
-  const bg = useColorModeValue('#2f301bbf', '#f9f4e7bf');
-  const bgHover = useColorModeValue('#30201bef', '#f9f4e7');
+  // const color = useColorModeValue('#f9f4e7', '#151500');
+  const color = useColorModeValue('#151500', '#f9f4e7');
+  const bg = useColorModeValue('green.400', 'green.700');
+  const bgFocus = useColorModeValue('green.600', 'green.500');
   const [rectY, setRectY] = useState(0);
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
@@ -86,17 +87,19 @@ function Navigation() {
         <Button
           outline="none"
           borderRadius="0"
-          _active={{ boxShadow: 'none' }}
+          _active={{ boxShadow: 'none', backgroundColor: 'blue.500' }}
           _focus={{
             outline: 'none',
             boxShadow: 'none',
+            backgroundColor: bgFocus,
           }}
-          _hover={{ backgroundColor: bgHover }}
+          _hover={{ backgroundColor: bg }}
           cursor="pointer"
           padding="2"
           w="50px"
           h="50px"
-          bg={bg}
+          // bg={bg}
+          bg="none"
           onClick={() => toggleOpen()}
         >
           <svg width="40" height="40" viewBox="0 0 40 40">
@@ -139,8 +142,8 @@ function Navigation() {
           >
             <Icon
               color={color}
-              bg={bg}
-              _hover={{ backgroundColor: bgHover }}
+              // bg={bg}
+              _hover={{ backgroundColor: bg }}
               w="5em"
               h="5em"
               padding="1em"
@@ -157,8 +160,8 @@ function Navigation() {
           >
             <Icon
               color={color}
-              bg={bg}
-              _hover={{ backgroundColor: bgHover }}
+              // bg={bg}
+              _hover={{ backgroundColor: bg }}
               w="5em"
               h="5em"
               padding="1em"
@@ -177,8 +180,8 @@ function Navigation() {
               <a>
                 <Icon
                   color={color}
-                  bg={bg}
-                  _hover={{ backgroundColor: bgHover }}
+                  // bg={bg}
+                  _hover={{ backgroundColor: bg }}
                   w="5em"
                   h="5em"
                   padding="1em"
