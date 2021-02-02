@@ -102,7 +102,11 @@ function Navigation() {
         <Button
           outline="none"
           borderRadius="none"
-          _active={{ boxShadow: 'none', backgroundColor: 'blue.500' }}
+          _active={{
+            outline: 'none',
+            boxShadow: 'none',
+            backgroundColor: 'blue.500',
+          }}
           _focus={{
             outline: 'none',
             boxShadow: 'none',
