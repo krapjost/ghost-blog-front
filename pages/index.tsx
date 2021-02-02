@@ -71,30 +71,19 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
       transition="background-color 0.2s"
       centerContent
     >
-      {/* <Text w="90%" fontSize="md">
-        {JSON.stringify(posts[0].tags, null, 2)}
-      </Text> */}
-      {/* <Avatar
-        size="2xl"
-        name={posts[0].primary_author.name}
-        src="https://bit.ly/sage-adebayo"
-      />
-      <Box mb="10">{posts[0].primary_author.name}</Box> */}
       <List display="flex" flexDirection="column" justifyContent="space-around">
         {posts.map(
           (post): JSX.Element => (
             <ListItem
-              // boxShadow="lg"
               borderBottom={`1px solid ${divider}`}
               mb="0"
               padding="0"
-              // bg={bg}
               key={post.slug}
             >
               <Link href="/post/[slug]" as={`/post/${post.slug}`}>
                 <a>
                   <Heading
-                    mt="5"
+                    padding="3"
                     size="xl"
                     color="brown.600"
                     textAlign="center"
@@ -108,11 +97,11 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                 </a>
               </Link>
 
-              <Text color={color} fontSize=".7em" margin="5">
+              <Text color={color} margin="5">
                 {post.excerpt}
               </Text>
 
-              <Flex margin="5" fontSize=".9em" alignItems="center">
+              <Flex margin="5" alignItems="center">
                 <ListIcon as={FiTag} />
                 {post.tags[0]
                   ? post.tags.map((tag) => (
@@ -142,7 +131,7 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
               <Text
                 color={color}
                 display="flex"
-                fontSize=".5em"
+                fontSize=".8em"
                 padding="1"
                 pr="3"
                 alignItems="center"
