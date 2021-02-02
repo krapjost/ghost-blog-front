@@ -16,7 +16,7 @@ import { motion, useCycle } from 'framer-motion';
 import Image from 'next/image';
 
 import Navigation from '../components/Navigation';
-
+import Header from '../components/Header';
 import { FiTag, FiEdit3, FiBookOpen } from 'react-icons/fi';
 const { CONTENT_API_KEY } = process.env;
 
@@ -37,6 +37,7 @@ class tags_ {
 }
 class primary_ {
   name: string;
+  profile_image: string;
 }
 
 async function getPosts() {
@@ -45,7 +46,7 @@ async function getPosts() {
   ).then((res) => res.json());
 
   const posts = res.posts;
-  console.log(posts[0].tags[0]);
+  console.log(posts);
 
   return posts;
 }
@@ -57,6 +58,7 @@ export const getStaticProps = async ({ params }) => {
 
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
+  const profile_image = posts[0].primary_author.profile_image;
 
   const bg = useColorModeValue('white', 'brown.900');
   const tagBg = useColorModeValue('brown.100', 'brown.800');
@@ -68,10 +70,12 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
       maxW="800px"
       w="100%"
       padding="0"
+      pt="10"
       bg={bg}
       transition="background-color 0.2s"
       centerContent
     >
+      <Header avatar={profile_image} />
       <List
         w="100%"
         display="flex"

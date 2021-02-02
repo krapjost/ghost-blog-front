@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Container, Box, Heading, useColorModeValue } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Navigation from '../../components/Navigation';
+import Header from '../../components/Header';
 
 const { CONTENT_API_KEY } = process.env;
 
@@ -9,7 +10,13 @@ type Post = {
   title: string;
   slug: string;
   html: string;
+  primary_author: primary_;
 };
+
+class primary_ {
+  name: string;
+  profile_image: string;
+}
 
 async function getPost(slug: string) {
   const res = await fetch(
@@ -55,19 +62,23 @@ const Post: React.FC<{ post: Post }> = (props) => {
   }
 
   return (
-    <Container
-      className="post"
-      maxW="800px"
-      padding="1em"
-      bg={bg}
-      centerContent
-    >
-      <Heading w="100%" size="xl" isTruncated>
-        {post.title}
-      </Heading>
-      <Box w="100%" dangerouslySetInnerHTML={{ __html: post.html }} />
-      <Navigation />
-    </Container>
+    <>
+      <Header avatar="/vercel.svg" header={post.title} />
+
+      <Container
+        className="post"
+        maxW="800px"
+        padding="1em"
+        bg={bg}
+        centerContent
+      >
+        <Heading w="100%" size="xl" isTruncated>
+          {post.title}
+        </Heading>
+        <Box w="100%" dangerouslySetInnerHTML={{ __html: post.html }} />
+        <Navigation />
+      </Container>
+    </>
   );
 };
 
