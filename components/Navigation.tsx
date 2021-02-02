@@ -79,6 +79,7 @@ const navItem = {
 function Navigation() {
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue('#151500', '#f9f4e7');
+  const bg = useColorModeValue('brown.50', 'brown.800');
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
@@ -100,7 +101,7 @@ function Navigation() {
         {/* NAVIGATION_ */}
         <Button
           outline="none"
-          borderRadius="full"
+          borderRadius="none"
           _active={{ boxShadow: 'none', backgroundColor: 'blue.500' }}
           _focus={{
             outline: 'none',
@@ -109,9 +110,9 @@ function Navigation() {
           _hover={{ backgroundColor: 'none' }}
           cursor="pointer"
           padding="2"
-          w="60px"
-          h="60px"
-          bg="none"
+          w="4em"
+          h="4em"
+          bg={bg}
           onClick={() => toggleOpen()}
         >
           <svg width="60" height="60" viewBox="0 0 60 60">
@@ -148,9 +149,9 @@ function Navigation() {
             <SearchModalComponent>
               <Icon
                 color={color}
+                bg={bg}
                 _hover={{ backgroundColor: 'green.400' }}
                 _active={{ backgroundColor: 'blue.500' }}
-                borderRadius="1em"
                 w="4em"
                 h="4em"
                 padding="1em"
@@ -168,9 +169,9 @@ function Navigation() {
           >
             <Icon
               color={color}
+              bg={bg}
               _hover={{ backgroundColor: 'green.400' }}
               _active={{ backgroundColor: 'blue.500' }}
-              borderRadius="1em"
               w="4em"
               h="4em"
               padding="1em"
@@ -193,9 +194,9 @@ function Navigation() {
               >
                 <Icon
                   color={color}
+                  bg={bg}
                   _hover={{ backgroundColor: 'green.400' }}
                   _active={{ backgroundColor: 'blue.500' }}
-                  borderRadius="1em"
                   w="4em"
                   h="4em"
                   padding="1em"

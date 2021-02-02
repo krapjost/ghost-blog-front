@@ -37,7 +37,7 @@ export const getStaticPaths = () => {
 };
 
 const Post: React.FC<{ post: Post }> = (props) => {
-  const bg = useColorModeValue('#b9a792', '#30201b');
+  const bg = useColorModeValue('white', 'brown.900');
   const tagBg = useColorModeValue('#a69875', '#4f4d31');
   const darkerBg = useColorModeValue('#e4d9cd', '#150200');
   const divider = useColorModeValue('#b9a792', '#30201b');
@@ -60,7 +60,7 @@ const Post: React.FC<{ post: Post }> = (props) => {
       maxW="800px"
       padding="1em"
       fontSize=".8em"
-      bg={darkerBg}
+      bg={bg}
       centerContent
     >
       <Heading size="xl" isTruncated>
