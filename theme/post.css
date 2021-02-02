@@ -18,10 +18,6 @@
   --lightBrown: #a58152;
 }
 
-a {
-  background-color: transparent;
-}
-
 b,
 strong {
   font-weight: bold;
@@ -140,10 +136,6 @@ table {
 td,
 th {
   padding: 0;
-}
-
-a {
-  text-decoration: none;
 }
 
 a:hover {
