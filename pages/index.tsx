@@ -66,25 +66,33 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   return (
     <Container
       maxW="800px"
+      w="100%"
       padding="0"
       bg={bg}
       transition="background-color 0.2s"
       centerContent
     >
-      <List display="flex" flexDirection="column" justifyContent="space-around">
+      <List
+        w="100%"
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-around"
+      >
         {posts.map(
           (post): JSX.Element => (
             <ListItem
               borderBottom={`1px solid ${divider}`}
               mb="0"
+              // w="100%"
               padding="0"
               key={post.slug}
             >
               <Link href="/post/[slug]" as={`/post/${post.slug}`}>
                 <a>
                   <Heading
-                    padding="3"
+                    padding="5"
                     size="xl"
+                    w="100%"
                     color="brown.600"
                     textAlign="center"
                     _hover={{ color: color }}
