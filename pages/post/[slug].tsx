@@ -62,7 +62,7 @@ const Post: React.FC<{ post: Post }> = (props) => {
       bg={bg}
       centerContent
     >
-      <Heading size="xl" isTruncated>
+      <Heading w="100%" size="xl" isTruncated>
         {post.title}
       </Heading>
       <Box w="100%" dangerouslySetInnerHTML={{ __html: post.html }} />
