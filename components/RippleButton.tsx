@@ -39,8 +39,8 @@ const RippleButton = ({ children }): JSX.Element => {
       _hover={{
         boxShadow: `0 0 0 2px ${color} inset`,
       }}
-      onClick={createRipple}
-      onTouchStart={createRipple}
+      onClick={(e) => createRipple(e)}
+      onTouchStart={(e) => createRipple(e)}
     >
       {children}
     </Box>
