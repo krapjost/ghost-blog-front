@@ -227,13 +227,24 @@ dd {
   text-align: left;
 }
 
+.rippleButton:hover p {
+  transition: all 300ms;
+  font-weight: bold;
+  text-decoration: none;
+}
+.rippleButton:hover h2 {
+  transition: all 300ms;
+  color: var(--blue);
+  text-decoration: none;
+}
+
 span.ripple {
   position: absolute;
   border-radius: 50%;
   transform: scale(0);
   animation: ripple 700ms linear;
   animation-timing-function: ease-out;
-  background-color: rgba(0, 89, 255, 0.5);
+  background-color: var(--brown);
 }
 
 @keyframes ripple {

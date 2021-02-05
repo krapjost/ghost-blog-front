@@ -9,7 +9,8 @@ import {
 import React from 'react';
 
 function Header({ avatar, header = "krapjost's Blog" }) {
-  const bg = useColorModeValue('#00000010', '#ffffff10');
+  const bg = useColorModeValue('#fff', '#000');
+  const shadow = useColorModeValue('#00000050', '#ffffff50');
 
   return (
     <Flex
@@ -19,6 +20,7 @@ function Header({ avatar, header = "krapjost's Blog" }) {
       w="100%"
       zIndex="banner"
       alignItems="center"
+      boxShadow={`0px 5px 10px -5px ${shadow}`}
       justifyContent="space-between"
     >
       <Avatar margin="2" size="sm" name="gidoong" src={avatar} />
@@ -33,7 +35,7 @@ function Header({ avatar, header = "krapjost's Blog" }) {
           outline: '0',
         }}
         margin="2"
-        colorScheme="whiteAlpha"
+        colorScheme="blue"
       ></Switch>
     </Flex>
   );

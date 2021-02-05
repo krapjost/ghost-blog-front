@@ -74,14 +74,15 @@ function Navigation() {
         ref={containerRef}
         style={{
           position: 'fixed',
-          bottom: '1em',
-          right: '1em',
+          top: '90%',
+          left: '50%',
+          transform: 'translateX(-50%)',
         }}
       >
         {/* NAVIGATION_ */}
         <Button
           outline="none"
-          borderRadius="none"
+          borderRadius="full"
           _active={{
             outline: 'none',
             boxShadow: 'none',

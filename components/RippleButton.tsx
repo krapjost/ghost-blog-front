@@ -1,10 +1,12 @@
-import { Button, Box } from '@chakra-ui/react';
+import { useColorModeValue, Box } from '@chakra-ui/react';
 import React from 'react';
 
-const RippleButton = ({ children }) => {
+const RippleButton = ({ children }): JSX.Element => {
+  const color = useColorModeValue('black', 'white');
+  const bg = useColorModeValue('brown.100', 'brown.800');
+
   function createRipple(event) {
     const button = event.currentTarget;
-
     const circle = document.createElement('span');
 
     const diameter = Math.max(button.clientWidth, button.clientHeight);
@@ -27,15 +29,24 @@ const RippleButton = ({ children }) => {
 
   return (
     <Box
+      className="rippleButton"
       pt="5"
       pb="5"
       position="relative"
       overflow="hidden"
-      transition="background 300ms"
+      transition="all 200ms"
       width="100%"
       _hover={{
-        boxShadow: '0 0 0 1px #fff',
+        boxShadow: `0 0 0 2px ${color} inset`,
+        color: color,
+        textDecoration: 'none',
       }}
+      //   style={{
+      //     // background: 'red',
+      //     '&:hover': {
+      //       background: 'black',
+      //     },
+      //   }}
       onClick={createRipple}
     >
       {children}

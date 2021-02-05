@@ -72,8 +72,8 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
     <Container
       maxW="800px"
       w="100%"
-      padding="0"
-      pt="10"
+      padding="2"
+      pt="12"
       transition="background-color 0.2s"
       centerContent
     >
@@ -87,10 +87,8 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
         {posts.map(
           (post): JSX.Element => (
             <ListItem
-              border={`1px solid ${divider}`}
-              // boxShadow={`0 0 0 1px ${divider} inset`}
+              boxShadow={`0 0 0 1px ${divider} inset`}
               mb="0"
-              // w="100%"
               padding="0"
               key={post.slug}
             >
@@ -100,9 +98,8 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                     <Heading
                       pl="10"
                       size="lg"
-                      color="brown.500"
+                      // color="inherit"
                       textDecoration="underline"
-                      _hover={{ color: color, textDecoration: 'none' }}
                       _active={{ color: 'blue.500' }}
                       lineHeight="1.7em"
                       isTruncated
