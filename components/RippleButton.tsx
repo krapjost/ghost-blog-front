@@ -34,7 +34,6 @@ const RippleButton = ({ children }) => {
       transition="background 300ms"
       width="100%"
       _hover={{
-        background: 'linear-gradient( #66666666, #666666)',
         boxShadow: '0 0 0 1px #fff',
       }}
       onClick={createRipple}

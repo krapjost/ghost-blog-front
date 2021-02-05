@@ -58,6 +58,7 @@ const navItem = {
 function Navigation() {
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue('#151500', '#f9f4e7');
+  const colorHover = useColorModeValue('#151500', '#f9f4e7');
   const bg = useColorModeValue('brown.50', 'brown.800');
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
@@ -96,7 +97,7 @@ function Navigation() {
           padding="2"
           w="4em"
           h="4em"
-          bg={bg}
+          bg="none"
           onClick={() => toggleOpen()}
         >
           <svg width="60" height="60" viewBox="0 0 60 60">
