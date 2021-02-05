@@ -89,6 +89,7 @@ function Navigation() {
           _focus={{
             outline: 'none',
             boxShadow: 'none',
+            background: 'none',
           }}
           _hover={{ backgroundColor: 'none' }}
           cursor="pointer"
