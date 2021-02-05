@@ -38,16 +38,9 @@ const RippleButton = ({ children }): JSX.Element => {
       width="100%"
       _hover={{
         boxShadow: `0 0 0 2px ${color} inset`,
-        color: color,
-        textDecoration: 'none',
       }}
-      //   style={{
-      //     // background: 'red',
-      //     '&:hover': {
-      //       background: 'black',
-      //     },
-      //   }}
       onClick={createRipple}
+      onTouchStart={createRipple}
     >
       {children}
     </Box>

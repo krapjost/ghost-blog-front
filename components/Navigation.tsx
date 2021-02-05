@@ -74,7 +74,7 @@ function Navigation() {
         ref={containerRef}
         style={{
           position: 'fixed',
-          top: '90%',
+          bottom: '1em',
           left: '50%',
           transform: 'translateX(-50%)',
         }}

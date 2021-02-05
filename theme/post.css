@@ -230,11 +230,9 @@ dd {
 .rippleButton:hover p {
   transition: all 300ms;
   font-weight: bold;
-  text-decoration: none;
 }
 .rippleButton:hover h2 {
   transition: all 300ms;
-  color: var(--blue);
   text-decoration: none;
 }
 
