@@ -17,7 +17,10 @@ import Image from 'next/image';
 
 import Navigation from '../components/Navigation';
 import Header from '../components/Header';
+import RippleButton from '../components/RippleButton';
+
 import { FiTag, FiEdit3, FiBookOpen } from 'react-icons/fi';
+import { useEffect } from 'react';
 const { CONTENT_API_KEY } = process.env;
 
 type Post = {
@@ -60,9 +63,9 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
   const profile_image = posts[0].primary_author.profile_image;
 
-  const bg = useColorModeValue('white', 'brown.900');
+  const bg = useColorModeValue('white', 'black');
   const tagBg = useColorModeValue('brown.100', 'brown.800');
-  const divider = useColorModeValue('#b9a792', '#30201b');
+  const divider = useColorModeValue('black', 'white');
   const color = useColorModeValue('brown.900', 'brown.100');
 
   return (
@@ -71,7 +74,6 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
       w="100%"
       padding="0"
       pt="10"
-      bg={bg}
       transition="background-color 0.2s"
       centerContent
     >
@@ -85,7 +87,8 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
         {posts.map(
           (post): JSX.Element => (
             <ListItem
-              borderBottom={`1px solid ${divider}`}
+              border={`1px solid ${divider}`}
+              // boxShadow={`0 0 0 1px ${divider} inset`}
               mb="0"
               // w="100%"
               padding="0"
@@ -93,32 +96,33 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
             >
               <Link href="/post/[slug]" as={`/post/${post.slug}`}>
                 <a>
-                  <Heading
-                    padding="5"
-                    size="xl"
-                    w="100%"
-                    color="brown.600"
-                    textAlign="center"
-                    _hover={{ color: color }}
-                    _active={{ color: 'blue.500' }}
-                    lineHeight="1.7em"
-                    isTruncated
-                  >
-                    {post.title}
-                  </Heading>
+                  <RippleButton>
+                    <Heading
+                      pl="10"
+                      size="lg"
+                      color="brown.500"
+                      textDecoration="underline"
+                      _hover={{ color: color, textDecoration: 'none' }}
+                      _active={{ color: 'blue.500' }}
+                      lineHeight="1.7em"
+                      isTruncated
+                    >
+                      {post.title}
+                    </Heading>
+                    <Text color={color} margin="5" mb="0">
+                      {post.excerpt}
+                    </Text>
+                  </RippleButton>
                 </a>
               </Link>
+              <Divider borderColor={divider} />
 
-              <Text color={color} margin="5">
-                {post.excerpt}
-              </Text>
-
-              <Flex margin="5" alignItems="center">
-                <ListIcon as={FiTag} />
+              <Flex margin="2" alignItems="center">
+                <ListIcon ml="3" as={FiTag} />
                 {post.tags[0]
                   ? post.tags.map((tag) => (
                       <Tag
-                        ml="3"
+                        ml="5"
                         fontSize=".6em"
                         fontWeight="bold"
                         variant="outline"

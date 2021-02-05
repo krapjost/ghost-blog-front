@@ -44,12 +44,6 @@ export const getStaticPaths = () => {
 };
 
 const Post: React.FC<{ post: Post }> = (props) => {
-  const bg = useColorModeValue('white', 'brown.900');
-  const tagBg = useColorModeValue('#a69875', '#4f4d31');
-  const darkerBg = useColorModeValue('#e4d9cd', '#150200');
-  const divider = useColorModeValue('#b9a792', '#30201b');
-  const textColor = useColorModeValue('#30201b', '#e4d9cd');
-
   console.log('props=', props);
   const { post } = props;
 
@@ -65,13 +59,7 @@ const Post: React.FC<{ post: Post }> = (props) => {
     <>
       <Header avatar="/vercel.svg" header={post.title} />
 
-      <Container
-        className="post"
-        maxW="800px"
-        padding="1em"
-        bg={bg}
-        centerContent
-      >
+      <Container className="post" maxW="800px" padding="1em" centerContent>
         <Heading w="100%" size="xl" isTruncated>
           {post.title}
         </Heading>

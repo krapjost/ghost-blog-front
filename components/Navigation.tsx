@@ -32,27 +32,6 @@ const Path = (props) => (
   />
 );
 
-// const navBar = {
-//   open: {
-//     background: '#cdef90',
-//     transition: {
-//       delay: 0,
-//       type: 'spring',
-//       stiffness: 700,
-//       damping: 20,
-//     },
-//   },
-//   closed: {
-//     background: '#fff',
-//     transition: {
-//       delay: 0,
-//       type: 'spring',
-//       stiffness: 500,
-//       damping: 40,
-//     },
-//   },
-// };
-
 const navItem = {
   open: {
     scale: 1,

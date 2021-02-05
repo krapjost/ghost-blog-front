@@ -13,9 +13,14 @@
   --lightgrey: #c5d2d9;
   --whitegrey: #e5eff5;
   --pink: #fa3a57;
+  --blackBrown: #11100f;
   --darkBrown: #3d2f1c;
   --brown: #725733;
   --lightBrown: #a58152;
+  --test: #808080;
+}
+* {
+  box-sizing: border-box;
 }
 
 b,
@@ -139,7 +144,7 @@ th {
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 audio,
@@ -213,6 +218,22 @@ dt {
 dd {
   margin: 0 0 5px 0;
   text-align: left;
+}
+
+span.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 700ms linear;
+  animation-timing-function: ease-out;
+  background-color: rgba(0, 89, 255, 0.5);
+}
+
+@keyframes ripple {
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 
 /* Post
@@ -381,7 +402,7 @@ Usage (In Ghost editor):
   font-size: 0.8em;
   line-height: 1em;
   font-weight: 400 !important;
-  background: var(--brown);
+  background: var(--darkBrown);
   color: var(--whitegrey);
   border-radius: 3px;
 }
@@ -399,7 +420,7 @@ Usage (In Ghost editor):
   color: var(--whitegrey);
   font-size: 1.2rem;
   line-height: 1.5em;
-  background: var(--brown);
+  background: var(--darkBrown);
   border-radius: 5px;
 }
 

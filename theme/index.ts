@@ -42,10 +42,11 @@ const fonts = {
 
 const styles = {
   global: (props)=>({
+
       body: {
         fontFamily: "body",
-        color: mode("brown.900", "whiteAlpha.900")(props),
-        bg: mode("white", "brown.900")(props),
+        color: mode("black", "whiteAlpha.900")(props),
+        bg: mode("white", "black")(props),
         transition: "background-color 0.2s",
         lineHeight: "base"
       },
@@ -56,6 +57,7 @@ const styles = {
         borderColor: mode("green.200", "whiteAlpha.300")(props),
         wordWrap: "break-word"
       }
+      
     }  
   )}
 
