@@ -47,7 +47,7 @@ const navItem = {
     scale: 0,
     y: 70,
     transition: {
-      delay: 0.1,
+      delay: 0,
       type: 'spring',
       stiffness: 600,
       damping: 40,
@@ -58,7 +58,6 @@ const navItem = {
 function Navigation() {
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue('#151500', '#f9f4e7');
-  const colorHover = useColorModeValue('#151500', '#f9f4e7');
   const bg = useColorModeValue('brown.50', 'brown.800');
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
@@ -135,12 +134,17 @@ function Navigation() {
             <SearchModalComponent>
               <Icon
                 color={color}
-                bg={bg}
-                _hover={{ backgroundColor: 'green.400' }}
+                bg="none"
+                _hover={{
+                  border: `2px solid ${color}`,
+                }}
                 _active={{ backgroundColor: 'blue.500' }}
                 w="4em"
                 h="4em"
-                padding="1em"
+                pt="1em"
+                pb="1em"
+                transition="all 200ms"
+                borderRadius="full"
                 as={FiSearch}
               />
             </SearchModalComponent>
@@ -155,12 +159,17 @@ function Navigation() {
           >
             <Icon
               color={color}
-              bg={bg}
-              _hover={{ backgroundColor: 'green.400' }}
+              bg="none"
+              _hover={{
+                border: `2px solid ${color}`,
+              }}
               _active={{ backgroundColor: 'blue.500' }}
               w="4em"
               h="4em"
-              padding="1em"
+              pt="1em"
+              pb="1em"
+              transition="all 200ms"
+              borderRadius="full"
               onClick={() => toggleColorMode()}
               as={colorMode === 'light' ? FiMoon : FiSun}
             />
@@ -180,12 +189,17 @@ function Navigation() {
               >
                 <Icon
                   color={color}
-                  bg={bg}
-                  _hover={{ backgroundColor: 'green.400' }}
+                  bg="none"
+                  _hover={{
+                    border: `2px solid ${color}`,
+                  }}
                   _active={{ backgroundColor: 'blue.500' }}
                   w="4em"
                   h="4em"
-                  padding="1em"
+                  pt="1em"
+                  pb="1em"
+                  transition="all 200ms"
+                  borderRadius="full"
                   as={FiHome}
                 />
               </a>

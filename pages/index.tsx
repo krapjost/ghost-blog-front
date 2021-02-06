@@ -63,7 +63,6 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
   const profile_image = posts[0].primary_author.profile_image;
 
-  const bg = useColorModeValue('white', 'black');
   const tagBg = useColorModeValue('brown.100', 'brown.800');
   const divider = useColorModeValue('black', 'white');
   const color = useColorModeValue('brown.900', 'brown.100');

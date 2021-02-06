@@ -40,7 +40,6 @@ const RippleButton = ({ children }): JSX.Element => {
         boxShadow: `0 0 0 2px ${color} inset`,
       }}
       onClick={(e) => createRipple(e)}
-      onTouchStart={(e) => createRipple(e)}
     >
       {children}
     </Box>
