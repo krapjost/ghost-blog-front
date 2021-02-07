@@ -35,7 +35,7 @@ const Path = (props) => (
 const navItem = {
   open: {
     scale: 1,
-    y: 0,
+    x: -70,
     transition: {
       delay: 0,
       type: 'spring',
@@ -45,7 +45,7 @@ const navItem = {
   },
   closed: {
     scale: 0,
-    y: 70,
+    x: 0,
     transition: {
       delay: 0,
       type: 'spring',
@@ -74,14 +74,13 @@ function Navigation() {
         style={{
           position: 'fixed',
           bottom: '1em',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          right: '1em',
         }}
       >
         {/* NAVIGATION_ */}
         <Button
           outline="none"
-          borderRadius="full"
+          borderRadius="0"
           _active={{
             outline: 'none',
             boxShadow: 'none',
@@ -128,7 +127,8 @@ function Navigation() {
             variants={navItem}
             style={{
               position: 'absolute',
-              top: '-12em',
+              top: '0',
+              left: '-4em',
             }}
           >
             <SearchModalComponent>
@@ -154,31 +154,7 @@ function Navigation() {
             variants={navItem}
             style={{
               position: 'absolute',
-              top: '-8em',
-            }}
-          >
-            <Icon
-              color={color}
-              bg="none"
-              _hover={{
-                border: `2px solid ${color}`,
-              }}
-              _active={{ backgroundColor: 'blue.500' }}
-              w="4em"
-              h="4em"
-              pt="1em"
-              pb="1em"
-              transition="all 200ms"
-              borderRadius="full"
-              onClick={() => toggleColorMode()}
-              as={colorMode === 'light' ? FiMoon : FiSun}
-            />
-          </motion.div>
-          <motion.div
-            variants={navItem}
-            style={{
-              position: 'absolute',
-              top: '-4em',
+              top: '0',
             }}
           >
             <Link href="/">

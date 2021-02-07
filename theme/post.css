@@ -240,9 +240,8 @@ span.ripple {
   position: absolute;
   border-radius: 50%;
   transform: scale(0);
-  animation: ripple 700ms linear;
-  animation-timing-function: ease-out;
-  background-color: var(--brown);
+  animation: ripple 500ms linear;
+  animation-timing-function: ease-in;
 }
 
 @keyframes ripple {
@@ -302,7 +301,7 @@ span.ripple {
 .post ul,
 .post ol,
 .post dl {
-  margin-left: 1.5em;
+  padding-left: 1.5em;
 }
 @media (max-width: 500px) {
   .post p,
@@ -337,7 +336,7 @@ span.ripple {
 
 .post strong,
 .post em {
-  color: var(--green);
+  color: var(--blue);
 }
 
 .post small {
@@ -432,12 +431,12 @@ Usage (In Ghost editor):
   margin: 1.5em 0 3em;
   padding: 20px;
   max-width: 100%;
-  border: var(--darkgrey);
+  border: 1px solid var(--midgrey);
   color: var(--whitegrey);
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1.5em;
-  background: var(--darkBrown);
-  border-radius: 5px;
+  background: var(--darkgrey);
+  /* border-radius: 5px; */
 }
 
 .post pre code {

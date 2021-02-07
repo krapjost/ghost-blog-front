@@ -15,6 +15,7 @@ const RippleButton = ({ children }): JSX.Element => {
     circle.style.width = circle.style.height = `${diameter}px`;
     circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
     circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+    circle.style.backgroundColor = `${color}`;
 
     circle.classList.add('ripple');
 

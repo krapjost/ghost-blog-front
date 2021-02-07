@@ -34,7 +34,6 @@ const ColorModeSwitch = (props) => {
       alignItems="center"
       borderRadius="9999px"
       boxShadow={`0px 0px 0px 1px ${toggleButton}`}
-      // bg={isLight ? 'gray.400' : 'gray.500'}
       cursor="pointer"
       position="relative"
       onClick={() => {

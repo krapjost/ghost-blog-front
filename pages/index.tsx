@@ -2,6 +2,7 @@ import Link from 'next/link';
 import {
   Container,
   Box,
+  Button,
   Divider,
   Heading,
   List,
@@ -20,7 +21,7 @@ import Header from '../components/Header';
 import RippleButton from '../components/RippleButton';
 
 import { FiTag, FiEdit3, FiBookOpen } from 'react-icons/fi';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 const { CONTENT_API_KEY } = process.env;
 
 type Post = {
@@ -61,11 +62,25 @@ export const getStaticProps = async ({ params }) => {
 
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageNumber = [];
+  const postsPerPage = 2;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const postsTotal = posts.length;
+
+  for (let i = 1; i <= Math.ceil(postsTotal / postsPerPage); i++) {
+    pageNumber.push(i);
+  }
+
   const profile_image = posts[0].primary_author.profile_image;
 
   const tagBg = useColorModeValue('brown.100', 'brown.800');
   const divider = useColorModeValue('black', 'white');
-  const color = useColorModeValue('brown.900', 'brown.100');
+  const color = useColorModeValue('black', 'white');
 
   return (
     <Container
@@ -77,13 +92,41 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
       centerContent
     >
       <Header avatar={profile_image} />
+      <List>
+        {pageNumber.map((pageNum) => (
+          <ListItem
+            _hover={{
+              cursor: currentPage === pageNum ? 'initial' : 'pointer',
+              border: `1px solid ${color}`,
+              fontWeight: 'bold',
+            }}
+            display="inline-block"
+            w="50px"
+            h="50px"
+            border={
+              currentPage === pageNum
+                ? `1px solid ${color}`
+                : '1px solid #00000000'
+            }
+            textAlign="center"
+            lineHeight="3em"
+            // background="blue.500"
+            padding="0"
+            mt="4"
+            key={pageNum}
+            onClick={currentPage === pageNum ? null : () => paginate(pageNum)}
+          >
+            {currentPage === pageNum ? <strong>{pageNum}</strong> : pageNum}
+          </ListItem>
+        ))}
+      </List>
       <List
         w="100%"
         display="flex"
         flexDirection="column"
         justifyContent="space-around"
       >
-        {posts.map(
+        {currentPosts.map(
           (post): JSX.Element => (
             <ListItem
               boxShadow={`0 0 0 1px ${divider} inset`}
@@ -97,7 +140,6 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                     <Heading
                       pl="10"
                       size="lg"
-                      // color="inherit"
                       textDecoration="underline"
                       _active={{ color: 'blue.500' }}
                       lineHeight="1.7em"
