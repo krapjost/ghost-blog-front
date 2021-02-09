@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import {
   Container,
-  Box,
-  Button,
   Divider,
   Heading,
   List,
@@ -13,12 +11,11 @@ import {
   useColorModeValue,
   Flex,
 } from '@chakra-ui/react';
-import { motion, useCycle } from 'framer-motion';
-import Image from 'next/image';
 
 import Navigation from '../components/Navigation';
 import Header from '../components/Header';
 import RippleButton from '../components/RippleButton';
+import Pagination from '../components/Pagination';
 
 import { FiTag, FiEdit3, FiBookOpen } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
@@ -62,14 +59,17 @@ export const getStaticProps = async ({ params }) => {
 
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
+
   const [currentPage, setCurrentPage] = useState(1);
+
   const pageNumber = [];
-  const postsPerPage = 2;
+
+  const postsPerPage = 3;
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const postsTotal = posts.length;
 
   for (let i = 1; i <= Math.ceil(postsTotal / postsPerPage); i++) {
@@ -92,34 +92,7 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
       centerContent
     >
       <Header avatar={profile_image} />
-      <List>
-        {pageNumber.map((pageNum) => (
-          <ListItem
-            _hover={{
-              cursor: currentPage === pageNum ? 'initial' : 'pointer',
-              border: `1px solid ${color}`,
-              fontWeight: 'bold',
-            }}
-            display="inline-block"
-            w="50px"
-            h="50px"
-            border={
-              currentPage === pageNum
-                ? `1px solid ${color}`
-                : '1px solid #00000000'
-            }
-            textAlign="center"
-            lineHeight="3em"
-            // background="blue.500"
-            padding="0"
-            mt="4"
-            key={pageNum}
-            onClick={currentPage === pageNum ? null : () => paginate(pageNum)}
-          >
-            {currentPage === pageNum ? <strong>{pageNum}</strong> : pageNum}
-          </ListItem>
-        ))}
-      </List>
+
       <List
         w="100%"
         display="flex"
@@ -201,7 +174,12 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
           ),
         )}
       </List>
-
+      <Pagination
+        color={color}
+        currentPage={currentPage}
+        pageNumber={pageNumber}
+        setCurrentPage={setCurrentPage}
+      />
       <Navigation />
     </Container>
   );
