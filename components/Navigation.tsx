@@ -58,7 +58,7 @@ const navItem = {
 function Navigation() {
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue('#151500', '#f9f4e7');
-  const bg = useColorModeValue('brown.50', 'brown.800');
+  const bg = useColorModeValue('white', 'black');
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
@@ -88,10 +88,10 @@ function Navigation() {
           }}
           _focus={{
             outline: 'none',
-            boxShadow: 'none',
-            background: 'none',
           }}
-          _hover={{ backgroundColor: 'none' }}
+          _hover={{ backgroundColor: 'gray.500' }}
+          backgroundColor={bg}
+          boxShadow={`0 0 0 1px ${color}`}
           cursor="pointer"
           padding="2"
           w="4em"
