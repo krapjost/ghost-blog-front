@@ -3,6 +3,7 @@ import { Container, Box, Heading, useColorModeValue } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Navigation from '../../components/Navigation';
 import Header from '../../components/Header';
+import Loading from '../../components/Loading';
 
 const { CONTENT_API_KEY } = process.env;
 
@@ -44,15 +45,12 @@ export const getStaticPaths = () => {
 };
 
 const Post: React.FC<{ post: Post }> = (props) => {
-  console.log('props=', props);
   const { post } = props;
-
-  console.log('typeofthispost', typeof post);
 
   const router = useRouter();
 
   if (router.isFallback) {
-    return <h1> Loading</h1>;
+    return <Loading />;
   }
 
   return (

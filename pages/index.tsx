@@ -16,9 +16,11 @@ import Navigation from '../components/Navigation';
 import Header from '../components/Header';
 import RippleButton from '../components/RippleButton';
 import Pagination from '../components/Pagination';
+import Loading from '../components/Loading';
 
 import { FiTag, FiEdit3, FiBookOpen } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 const { CONTENT_API_KEY } = process.env;
 
 type Post = {
@@ -60,6 +62,11 @@ export const getStaticProps = async ({ params }) => {
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
 
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <Loading />;
+  }
   const [currentPage, setCurrentPage] = useState(1);
 
   const pageNumber = [];
