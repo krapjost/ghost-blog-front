@@ -4,10 +4,10 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { motion, useCycle, useMotionValue, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { motion, useCycle } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { FiSearch, FiHome, FiMoon, FiSun } from 'react-icons/fi';
+import { FiSearch, FiHome } from 'react-icons/fi';
 import React from 'react';
 import SearchModalComponent from './SearchModal';
 
@@ -35,7 +35,7 @@ const Path = (props) => (
 const navItem = {
   open: {
     scale: 1,
-    x: -70,
+    x: -65,
     transition: {
       delay: 0,
       type: 'spring',
@@ -93,9 +93,8 @@ function Navigation() {
           backgroundColor={bg}
           boxShadow={`0 0 0 1px ${color}`}
           cursor="pointer"
-          padding="2"
           w="4em"
-          h="4em"
+          h="3em"
           bg="none"
           onClick={() => toggleOpen()}
         >
@@ -140,11 +139,13 @@ function Navigation() {
                 }}
                 _active={{ backgroundColor: 'blue.500' }}
                 w="4em"
-                h="4em"
-                pt="1em"
-                pb="1em"
+                h="3em"
+                pt="0.5em"
+                pb="0.5em"
+                backgroundColor={bg}
+                boxShadow={`0 0 0 1px ${color}`}
                 transition="all 200ms"
-                borderRadius="full"
+                // borderRadius="full"
                 as={FiSearch}
               />
             </SearchModalComponent>
@@ -155,6 +156,7 @@ function Navigation() {
             style={{
               position: 'absolute',
               top: '0',
+              left: '0',
             }}
           >
             <Link href="/">
@@ -171,11 +173,13 @@ function Navigation() {
                   }}
                   _active={{ backgroundColor: 'blue.500' }}
                   w="4em"
-                  h="4em"
-                  pt="1em"
-                  pb="1em"
+                  h="3em"
+                  pt="0.5em"
+                  pb="0.5em"
+                  backgroundColor={bg}
+                  boxShadow={`0 0 0 1px ${color}`}
                   transition="all 200ms"
-                  borderRadius="full"
+                  // borderRadius="full"
                   as={FiHome}
                 />
               </a>

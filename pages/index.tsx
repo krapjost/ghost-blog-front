@@ -20,7 +20,7 @@ import Loading from '../components/Loading';
 
 import { FiTag, FiEdit3, FiBookOpen } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 const { CONTENT_API_KEY } = process.env;
 
 type Post = {
@@ -61,12 +61,19 @@ export const getStaticProps = async ({ params }) => {
 
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
-
-  const router = useRouter();
-
-  if (router.isFallback) {
-    return <Loading />;
-  }
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const start = () => setLoading(true);
+    const end = () => setLoading(false);
+    Router.events.on('routeChangeStart', start);
+    Router.events.on('routeChangeComplete', end);
+    Router.events.on('routeChangeError', end);
+    return () => {
+      Router.events.off('routeChangeStart', start);
+      Router.events.off('routeChangeComplete', end);
+      Router.events.off('routeChangeError', end);
+    };
+  }, []);
   const [currentPage, setCurrentPage] = useState(1);
 
   const pageNumber = [];
@@ -89,7 +96,9 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const divider = useColorModeValue('black', 'white');
   const color = useColorModeValue('black', 'white');
 
-  return (
+  return loading === true ? (
+    <Loading />
+  ) : (
     <Container
       maxW="800px"
       w="100%"
