@@ -2,6 +2,7 @@ import Link from 'next/link';
 import {
   Container,
   Divider,
+  Box,
   Heading,
   List,
   ListItem,
@@ -49,7 +50,7 @@ async function getPosts() {
   ).then((res) => res.json());
 
   const posts = res.posts;
-  console.log(posts);
+  console.log(res);
 
   return posts;
 }
@@ -61,6 +62,17 @@ export const getStaticProps = async ({ params }) => {
 
 const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
   const { posts } = props;
+  const tags = [];
+  posts.map((post) => {
+    console.log('post.map', post.tags);
+    console.log('tags', tags);
+    post.tags[0]
+      ? post.tags.map((tag) => {
+          tags.push(tag);
+        })
+      : null;
+  });
+
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const start = () => setLoading(true);
@@ -92,7 +104,6 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
 
   const profile_image = posts[0].primary_author.profile_image;
 
-  const tagBg = useColorModeValue('brown.100', 'brown.800');
   const divider = useColorModeValue('black', 'white');
   const color = useColorModeValue('black', 'white');
 
@@ -108,6 +119,66 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
       centerContent
     >
       <Header avatar={profile_image} />
+      <Flex
+        // bg="red.500"
+        pt="5"
+        pb="5"
+        mt="5"
+        w="100%"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        boxShadow={`-5px 0 0 -1px ${color}`}
+      >
+        <Box pb="5">tags : </Box>
+        <List>
+          {tags.map((tag) => (
+            <Tag
+              position="relative"
+              transition="all 200ms"
+              key={tag.id}
+              ml="2"
+              fontSize=".6em"
+              fontWeight="bold"
+              variant="outline"
+              color={color}
+              borderWidth="1px"
+              borderStyle="solid"
+              borderColor={color}
+              borderRadius="0"
+              boxShadow={`2px 2px 1px -1px ${color}`}
+              _hover={{
+                boxShadow: `2px 2px 1px 0px ${color}`,
+                cursor: 'pointer',
+                transform: 'scale(1.2,1.2)',
+                // width: '100px',
+              }}
+            >
+              {tag.name ? tag.name : null}
+            </Tag>
+          ))}
+          <Tag
+            ml="2"
+            fontSize=".6em"
+            transition="all 200ms"
+            fontWeight="bold"
+            variant="outline"
+            color={color}
+            borderWidth="1px"
+            borderStyle="solid"
+            borderColor={color}
+            borderRadius="0"
+            boxShadow={`2px 2px 1px -1px ${color}`}
+            _hover={{
+              boxShadow: `2px 2px 1px 0px ${color}`,
+              cursor: 'pointer',
+              transform: 'scale(1.2,1.2)',
+            }}
+          >
+            null
+          </Tag>
+        </List>
+      </Flex>
 
       <List
         w="100%"
@@ -118,11 +189,60 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
         {currentPosts.map(
           (post): JSX.Element => (
             <ListItem
-              boxShadow={`0 0 0 1px ${divider} inset`}
+              boxShadow={`-5px 0px 0px -1px ${divider}`}
               mb="0"
               padding="0"
               key={post.slug}
             >
+              <Flex margin="2" alignItems="center">
+                <ListIcon ml="3" as={FiTag} />
+                {post.tags[0] ? (
+                  post.tags.map((tag) => (
+                    <Tag
+                      ml="2"
+                      fontSize=".6em"
+                      fontWeight="bold"
+                      variant="outline"
+                      color={color}
+                      borderWidth="1px"
+                      borderStyle="solid"
+                      borderColor={color}
+                      borderRadius="0"
+                      boxShadow={`2px 2px 1px -1px ${color}`}
+                      _hover={{
+                        boxShadow: `2px 2px 1px 0px ${color}`,
+                        cursor: 'pointer',
+                        transform: 'translateY(-1px)',
+                      }}
+                    >
+                      {tag.name}
+                    </Tag>
+                  ))
+                ) : (
+                  <Tag
+                    ml="2"
+                    fontSize=".6em"
+                    fontWeight="bold"
+                    variant="outline"
+                    color={color}
+                    borderWidth="1px"
+                    borderStyle="solid"
+                    borderColor={color}
+                    borderRadius="0"
+                    boxShadow={`2px 2px 1px -1px ${color}`}
+                    _hover={{
+                      boxShadow: `2px 2px 1px 0px ${color}`,
+                      cursor: 'pointer',
+                      transform: 'translateY(-1px)',
+                    }}
+                  >
+                    null
+                  </Tag>
+                )}
+              </Flex>
+
+              {/* <Divider borderColor={divider} /> */}
+
               <Link href="/post/[slug]" as={`/post/${post.slug}`}>
                 <a>
                   <RippleButton>
@@ -130,7 +250,6 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                       pl="10"
                       size="lg"
                       textDecoration="underline"
-                      _active={{ color: 'blue.500' }}
                       lineHeight="1.7em"
                       isTruncated
                     >
@@ -142,34 +261,7 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
                   </RippleButton>
                 </a>
               </Link>
-              <Divider borderColor={divider} />
-
-              <Flex margin="2" alignItems="center">
-                <ListIcon ml="3" as={FiTag} />
-                {post.tags[0]
-                  ? post.tags.map((tag) => (
-                      <Tag
-                        ml="5"
-                        fontSize=".6em"
-                        fontWeight="bold"
-                        variant="outline"
-                        color={color}
-                        borderWidth="1px"
-                        borderStyle="solid"
-                        borderColor={color}
-                        boxShadow="none"
-                        _hover={{
-                          cursor: 'pointer',
-                          backgroundColor: tagBg,
-                        }}
-                      >
-                        {tag.name}
-                      </Tag>
-                    ))
-                  : null}
-              </Flex>
-
-              <Divider borderColor={divider} />
+              {/* <Divider borderColor={divider} /> */}
 
               <Text
                 color={color}

@@ -31,14 +31,14 @@ const RippleButton = ({ children }): JSX.Element => {
   return (
     <Box
       className="rippleButton"
-      pt="5"
-      pb="5"
       position="relative"
       overflow="hidden"
       transition="all 200ms"
       width="100%"
       _hover={{
-        boxShadow: `0 0 0 2px ${color} inset`,
+        boxShadow: `-5px 0px 0 -1px ${color}`,
+        transform: 'translateX(10px)',
+        width: '98%',
       }}
       onClick={(e) => createRipple(e)}
     >
