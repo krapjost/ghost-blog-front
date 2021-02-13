@@ -1,23 +1,14 @@
-import Link from 'next/link';
-import { Container, Box, Heading, useColorModeValue } from '@chakra-ui/react';
+import { Container, Box, Heading, useColorMode } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Navigation from '../../components/Navigation';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
+import Footer from '../../components/Footer';
+import { getColor } from '../../lib/colors';
+
+import PostType from '../../components/Types';
 
 const { CONTENT_API_KEY } = process.env;
-
-type Post = {
-  title: string;
-  slug: string;
-  html: string;
-  primary_author: primary_;
-};
-
-class primary_ {
-  name: string;
-  profile_image: string;
-}
 
 async function getPost(slug: string) {
   const res = await fetch(
@@ -44,8 +35,9 @@ export const getStaticPaths = () => {
   };
 };
 
-const Post: React.FC<{ post: Post }> = (props) => {
+const Post: React.FC<{ post: PostType }> = (props) => {
   const { post } = props;
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const router = useRouter();
 
@@ -55,7 +47,12 @@ const Post: React.FC<{ post: Post }> = (props) => {
 
   return (
     <>
-      <Header avatar="/vercel.svg" header={post.title} />
+      <Header
+        avatar="/vercel.svg"
+        header={post.title}
+        colorMode={colorMode}
+        toggleColorMode={toggleColorMode}
+      />
 
       <Container className="post" maxW="800px" padding="1em" centerContent>
         <Heading w="100%" size="xl" isTruncated>
@@ -64,6 +61,7 @@ const Post: React.FC<{ post: Post }> = (props) => {
         <Box w="100%" dangerouslySetInnerHTML={{ __html: post.html }} />
         <Navigation />
       </Container>
+      <Footer color={getColor()} />
     </>
   );
 };

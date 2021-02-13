@@ -1,48 +1,20 @@
-import Link from 'next/link';
-import {
-  Container,
-  Divider,
-  Box,
-  Heading,
-  List,
-  ListItem,
-  ListIcon,
-  Text,
-  Tag,
-  useColorModeValue,
-  Flex,
-} from '@chakra-ui/react';
+import { Container, useColorMode } from '@chakra-ui/react';
+import { getColor } from '../lib/colors';
 
 import Navigation from '../components/Navigation';
+import About from '../components/About';
 import Header from '../components/Header';
-import RippleButton from '../components/RippleButton';
 import Pagination from '../components/Pagination';
+import TagsList from '../components/TagsList';
+import PostsList from '../components/PostsList';
 import Loading from '../components/Loading';
+import Footer from '../components/Footer';
+import PostType from '../components/Types';
 
-import { FiTag, FiEdit3, FiBookOpen } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
-import { Router, useRouter } from 'next/router';
-const { CONTENT_API_KEY } = process.env;
+import { Router } from 'next/router';
 
-type Post = {
-  title: string;
-  slug: string;
-  excerpt: string;
-  published_at: string;
-  reading_time: string;
-  feature_image: string;
-  primary_author: primary_;
-  primary_tag: primary_;
-  tags: [tags_];
-};
-class tags_ {
-  id: string;
-  name: string;
-}
-class primary_ {
-  name: string;
-  profile_image: string;
-}
+const { CONTENT_API_KEY } = process.env;
 
 async function getPosts() {
   const res = await fetch(
@@ -60,9 +32,10 @@ export const getStaticProps = async ({ params }) => {
   return { props: { posts } };
 };
 
-const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
+const Home: React.FC<{ posts: PostType[] }> = (props): JSX.Element => {
   const { posts } = props;
   const tags = [];
+
   posts.map((post) => {
     console.log('post.map', post.tags);
     console.log('tags', tags);
@@ -72,8 +45,9 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
         })
       : null;
   });
-
+  const { colorMode, toggleColorMode } = useColorMode();
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const start = () => setLoading(true);
     const end = () => setLoading(false);
@@ -86,6 +60,7 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
       Router.events.off('routeChangeError', end);
     };
   }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const pageNumber = [];
@@ -104,192 +79,37 @@ const Home: React.FC<{ posts: Post[] }> = (props): JSX.Element => {
 
   const profile_image = posts[0].primary_author.profile_image;
 
-  const divider = useColorModeValue('black', 'white');
-  const color = useColorModeValue('black', 'white');
-
   return loading === true ? (
     <Loading />
   ) : (
-    <Container
-      maxW="800px"
-      w="100%"
-      padding="2"
-      pt="12"
-      transition="background-color 0.2s"
-      centerContent
-    >
-      <Header avatar={profile_image} />
-      <Flex
-        // bg="red.500"
-        pt="5"
-        pb="5"
-        mt="5"
+    <>
+      <About color={getColor()} />
+
+      <Container
+        maxW="800px"
         w="100%"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        boxShadow={`-5px 0 0 -1px ${color}`}
+        padding="2"
+        transition="background-color 0.2s"
+        centerContent
       >
-        <Box pb="5">tags : </Box>
-        <List>
-          {tags.map((tag) => (
-            <Tag
-              position="relative"
-              transition="all 200ms"
-              key={tag.id}
-              ml="2"
-              fontSize=".6em"
-              fontWeight="bold"
-              variant="outline"
-              color={color}
-              borderWidth="1px"
-              borderStyle="solid"
-              borderColor={color}
-              borderRadius="0"
-              boxShadow={`2px 2px 1px -1px ${color}`}
-              _hover={{
-                boxShadow: `2px 2px 1px 0px ${color}`,
-                cursor: 'pointer',
-                transform: 'scale(1.2,1.2)',
-                // width: '100px',
-              }}
-            >
-              {tag.name ? tag.name : null}
-            </Tag>
-          ))}
-          <Tag
-            ml="2"
-            fontSize=".6em"
-            transition="all 200ms"
-            fontWeight="bold"
-            variant="outline"
-            color={color}
-            borderWidth="1px"
-            borderStyle="solid"
-            borderColor={color}
-            borderRadius="0"
-            boxShadow={`2px 2px 1px -1px ${color}`}
-            _hover={{
-              boxShadow: `2px 2px 1px 0px ${color}`,
-              cursor: 'pointer',
-              transform: 'scale(1.2,1.2)',
-            }}
-          >
-            null
-          </Tag>
-        </List>
-      </Flex>
+        <Header
+          avatar={profile_image}
+          colorMode={colorMode}
+          toggleColorMode={toggleColorMode}
+        />
+        <TagsList color={getColor()} tags={tags} />
+        <PostsList color={getColor()} currentPosts={currentPosts} />
 
-      <List
-        w="100%"
-        display="flex"
-        flexDirection="column"
-        justifyContent="space-around"
-      >
-        {currentPosts.map(
-          (post): JSX.Element => (
-            <ListItem
-              boxShadow={`-5px 0px 0px -1px ${divider}`}
-              mb="0"
-              padding="0"
-              key={post.slug}
-            >
-              <Flex margin="2" alignItems="center">
-                <ListIcon ml="3" as={FiTag} />
-                {post.tags[0] ? (
-                  post.tags.map((tag) => (
-                    <Tag
-                      ml="2"
-                      fontSize=".6em"
-                      fontWeight="bold"
-                      variant="outline"
-                      color={color}
-                      borderWidth="1px"
-                      borderStyle="solid"
-                      borderColor={color}
-                      borderRadius="0"
-                      boxShadow={`2px 2px 1px -1px ${color}`}
-                      _hover={{
-                        boxShadow: `2px 2px 1px 0px ${color}`,
-                        cursor: 'pointer',
-                        transform: 'translateY(-1px)',
-                      }}
-                    >
-                      {tag.name}
-                    </Tag>
-                  ))
-                ) : (
-                  <Tag
-                    ml="2"
-                    fontSize=".6em"
-                    fontWeight="bold"
-                    variant="outline"
-                    color={color}
-                    borderWidth="1px"
-                    borderStyle="solid"
-                    borderColor={color}
-                    borderRadius="0"
-                    boxShadow={`2px 2px 1px -1px ${color}`}
-                    _hover={{
-                      boxShadow: `2px 2px 1px 0px ${color}`,
-                      cursor: 'pointer',
-                      transform: 'translateY(-1px)',
-                    }}
-                  >
-                    null
-                  </Tag>
-                )}
-              </Flex>
-
-              {/* <Divider borderColor={divider} /> */}
-
-              <Link href="/post/[slug]" as={`/post/${post.slug}`}>
-                <a>
-                  <RippleButton>
-                    <Heading
-                      pl="10"
-                      size="lg"
-                      textDecoration="underline"
-                      lineHeight="1.7em"
-                      isTruncated
-                    >
-                      {post.title}
-                    </Heading>
-                    <Text color={color} margin="5" mb="0">
-                      {post.excerpt}
-                    </Text>
-                  </RippleButton>
-                </a>
-              </Link>
-              {/* <Divider borderColor={divider} /> */}
-
-              <Text
-                color={color}
-                display="flex"
-                fontSize=".8em"
-                padding="1"
-                pr="3"
-                alignItems="center"
-                justifyContent="flex-end"
-                isTruncated
-              >
-                <ListIcon mr="2" ml="2" as={FiBookOpen} />
-                {post.reading_time} 분
-                <ListIcon mr="2" ml="2" as={FiEdit3} />
-                {new Date(post.published_at).toLocaleString()}
-              </Text>
-            </ListItem>
-          ),
-        )}
-      </List>
-      <Pagination
-        color={color}
-        currentPage={currentPage}
-        pageNumber={pageNumber}
-        setCurrentPage={setCurrentPage}
-      />
-      <Navigation />
-    </Container>
+        <Pagination
+          color={getColor()}
+          currentPage={currentPage}
+          pageNumber={pageNumber}
+          setCurrentPage={setCurrentPage}
+        />
+        <Navigation />
+      </Container>
+      <Footer color={getColor()} />
+    </>
   );
 };
 

@@ -1,7 +1,6 @@
 import {
   Avatar,
   Flex,
-  Switch,
   Text,
   useColorModeValue,
   useColorMode,
@@ -11,14 +10,13 @@ import {
 import { FiMoon, FiSun } from 'react-icons/fi';
 import { motion, useCycle } from 'framer-motion';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 const ColorModeSwitch = (props) => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode, toggleColorMode } = props;
   const toggleButton = useColorModeValue('#151500', '#f9f4e7');
 
-  const [isLight, setColor] = useCycle(true, false);
-  const colorModeIs = {
+  const circlePositionOnColorMode = {
     light: {
       x: 2,
     },
@@ -37,25 +35,27 @@ const ColorModeSwitch = (props) => {
       cursor="pointer"
       position="relative"
       onClick={() => {
-        setColor();
         toggleColorMode();
       }}
       {...props}
     >
-      <motion.div initial={false} animate={isLight ? 'light' : 'dark'}>
-        <motion.div variants={colorModeIs}>
+      <motion.div
+        initial={false}
+        animate={colorMode === 'light' ? 'light' : 'dark'}
+      >
+        <motion.div variants={circlePositionOnColorMode}>
           <Circle
-            bg={isLight ? 'black' : 'white'}
+            bg={colorMode === 'light' ? 'white' : 'black'}
             // margin="0.2em"
             w="1.5em"
             h="1.5em"
           >
             <Icon
-              as={isLight ? FiSun : FiMoon}
+              as={colorMode === 'light' ? FiSun : FiMoon}
               // background="#3fed30"
 
               // padding=".1em"
-              color={isLight ? 'white' : 'black'}
+              color={colorMode === 'light' ? 'black' : 'white'}
             />
           </Circle>
         </motion.div>
@@ -64,10 +64,14 @@ const ColorModeSwitch = (props) => {
   );
 };
 
-function Header({ avatar, header = "krapjost's Blog" }) {
+function Header({
+  avatar,
+  header = "krapjost's Blog",
+  colorMode,
+  toggleColorMode,
+}) {
   const bg = useColorModeValue('#fff', '#000');
   const shadow = useColorModeValue('#000000', '#ffffff');
-  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Flex
@@ -82,7 +86,11 @@ function Header({ avatar, header = "krapjost's Blog" }) {
     >
       <Avatar margin="2" ml="5" size="sm" name="gidoong" src={avatar} />
       <Text fontWeight="bold">{header}</Text>
-      <ColorModeSwitch mr="5" />
+      <ColorModeSwitch
+        mr="5"
+        colorMode={colorMode}
+        toggleColorMode={toggleColorMode}
+      />
     </Flex>
   );
 }
