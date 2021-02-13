@@ -34,6 +34,9 @@ export const getStaticProps = async ({ params }) => {
 
 const Home: React.FC<{ posts: PostType[] }> = (props): JSX.Element => {
   const { posts } = props;
+
+  const [filteredPosts, setFilteredPosts] = useState(posts);
+
   const tags = [];
 
   posts.map((post) => {
@@ -45,6 +48,7 @@ const Home: React.FC<{ posts: PostType[] }> = (props): JSX.Element => {
         })
       : null;
   });
+
   const { colorMode, toggleColorMode } = useColorMode();
   const [loading, setLoading] = useState(false);
 
@@ -65,13 +69,13 @@ const Home: React.FC<{ posts: PostType[] }> = (props): JSX.Element => {
 
   const pageNumber = [];
 
-  const postsPerPage = 3;
+  const postsPerPage = 2;
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  const postsTotal = posts.length;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const postsTotal = filteredPosts.length;
 
   for (let i = 1; i <= Math.ceil(postsTotal / postsPerPage); i++) {
     pageNumber.push(i);
@@ -97,7 +101,12 @@ const Home: React.FC<{ posts: PostType[] }> = (props): JSX.Element => {
           colorMode={colorMode}
           toggleColorMode={toggleColorMode}
         />
-        <TagsList color={getColor()} tags={tags} />
+        <TagsList
+          color={getColor()}
+          tags={tags}
+          setFilteredPosts={setFilteredPosts}
+          posts={posts}
+        />
         <PostsList color={getColor()} currentPosts={currentPosts} />
 
         <Pagination
