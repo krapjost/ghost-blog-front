@@ -1,7 +1,7 @@
 import { Avatar, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 
-function About({ color }) {
+function About({ color, avatar }) {
   return (
     <Flex
       w="100%"
@@ -12,7 +12,7 @@ function About({ color }) {
       justifyContent="space-around"
       borderBottom={`1px solid ${color}`}
     >
-      <Avatar margin="2" size="xl" name="gidoong" src={''} />
+      <Avatar margin="2" size="xl" name="gidoong" src={avatar} />
 
       <Flex flexDirection="column">
         const krapjost = {'{'}

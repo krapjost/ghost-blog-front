@@ -83,7 +83,7 @@ const Home: React.FC<{ posts: PostType[] }> = (props): JSX.Element => {
     <Loading />
   ) : (
     <>
-      <About color={getColor()} />
+      <About avatar={profile_image} color={getColor()} />
 
       <Container
         maxW="800px"

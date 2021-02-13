@@ -3,7 +3,6 @@ import {
   Flex,
   Text,
   useColorModeValue,
-  useColorMode,
   Circle,
   Icon,
 } from '@chakra-ui/react';
