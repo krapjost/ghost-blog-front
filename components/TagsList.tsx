@@ -35,9 +35,8 @@ function TagsList({ color, tags, setFilteredPosts, posts }) {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      boxShadow={`-5px 0 0 -1px ${color}`}
     >
-      <Box pb="5">tags : </Box>
+      <Box pb="5">Tags :</Box>
       <List>
         <Tag
           ml="2"

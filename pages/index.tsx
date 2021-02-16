@@ -69,7 +69,7 @@ const Home: React.FC<{ posts: PostType[] }> = (props): JSX.Element => {
 
   const pageNumber = [];
 
-  const postsPerPage = 2;
+  const postsPerPage = 5;
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;

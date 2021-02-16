@@ -24,11 +24,7 @@ function PostsList({ color, currentPosts }) {
     >
       {currentPosts.map(
         (post): JSX.Element => (
-          <ListItem
-            boxShadow={`-5px 0px 0px -1px ${color}`}
-            mb="5"
-            key={post.slug}
-          >
+          <ListItem mb="5" key={post.slug}>
             <Flex margin="2" alignItems="center">
               <ListIcon ml="3" as={FiTag} />
               {post.tags[0] ? (
@@ -90,7 +86,7 @@ function PostsList({ color, currentPosts }) {
                   >
                     {post.title}
                   </Heading>
-                  <Text color={color} margin="5" mb="0">
+                  <Text noOfLines={3} color={color} margin="5" mb="0">
                     {post.excerpt}
                   </Text>
                 </RippleButton>
